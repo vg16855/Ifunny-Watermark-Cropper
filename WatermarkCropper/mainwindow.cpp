@@ -24,6 +24,9 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_clicked()
 {
     //Choose Images
+
+    QStringList fileList = QFileDialog::getOpenFileNames();
+    crop->loadImages(fileList);
     crop->show();
     this->close();
 

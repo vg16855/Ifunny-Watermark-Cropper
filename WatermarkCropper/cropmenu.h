@@ -14,12 +14,13 @@ class cropMenu : public QWidget
 public:
     explicit cropMenu(QWidget *parent = nullptr);
     ~cropMenu();
+    void loadImages(QStringList);
 
 signals:
     void firstWindow();
 
 private slots:
-    void on_pushButton_clicked();
+    void on_goBack_clicked();
 
 private:
     Ui::cropMenu *ui;
