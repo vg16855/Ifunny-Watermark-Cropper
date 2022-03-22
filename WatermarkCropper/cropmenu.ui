@@ -6,16 +6,43 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>707</width>
-    <height>427</height>
+    <width>1280</width>
+    <height>720</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>8</number>
+   </property>
+   <property name="topMargin">
+    <number>8</number>
+   </property>
+   <property name="rightMargin">
+    <number>8</number>
+   </property>
+   <property name="bottomMargin">
+    <number>8</number>
+   </property>
    <item row="0" column="0" rowspan="2">
     <widget class="QScrollArea" name="scrollArea">
+     <property name="minimumSize">
+      <size>
+       <width>665</width>
+       <height>720</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>665</width>
+       <height>720</height>
+      </size>
+     </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::AdjustToContents</enum>
+     </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
@@ -24,42 +51,38 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>579</width>
-        <height>407</height>
+        <width>663</width>
+        <height>718</height>
        </rect>
       </property>
-      <layout class="QGridLayout" name="imageGridView"/>
+      <layout class="QGridLayout" name="imageGridView" rowstretch="0" columnstretch="0" rowminimumheight="0" columnminimumwidth="0">
+       <property name="leftMargin">
+        <number>10</number>
+       </property>
+       <property name="topMargin">
+        <number>10</number>
+       </property>
+       <property name="rightMargin">
+        <number>10</number>
+       </property>
+       <property name="bottomMargin">
+        <number>10</number>
+       </property>
+       <property name="spacing">
+        <number>5</number>
+       </property>
+      </layout>
      </widget>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>TextLabel</string>
-     </property>
-    </widget>
+   <item row="0" column="2">
+    <widget class="QWidget" name="widget" native="true"/>
    </item>
-   <item row="1" column="1">
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QPushButton" name="cropImages">
-       <property name="minimumSize">
-        <size>
-         <width>100</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>100</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Crop Images</string>
-       </property>
-      </widget>
-     </item>
+   <item row="1" column="2">
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0">
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <item>
       <widget class="QPushButton" name="goBack">
        <property name="minimumSize">
@@ -71,11 +94,30 @@
        <property name="maximumSize">
         <size>
          <width>100</width>
-         <height>20</height>
+         <height>25</height>
         </size>
        </property>
        <property name="text">
         <string>Go Back</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cropImages">
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Crop Images</string>
        </property>
       </widget>
      </item>
