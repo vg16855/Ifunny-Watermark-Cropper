@@ -3,8 +3,8 @@
 #include <QLabel>
 #include <QSizePolicy>
 #include <opencv2/opencv.hpp>
-#include <QCloseEvent>
 
+cv::String watermarkFilePath = "C:/Users/Bryan/Documents/Computer Science/CMSC 437/project-team-fortress/WatermarkCropper/Cropped Ifunny Watermark 140 x 20.png";
 cropMenu::cropMenu(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::cropMenu)
@@ -45,7 +45,7 @@ void cropMenu::loadImages(QStringList fileList)
         label->setFixedSize(100, 100);
         label->setPixmap(img.scaled(100,100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         label->setAlignment(Qt::AlignCenter);
-        ui->imageGridView->addWidget(label, j, k);
+        ui->imageGridView->addWidget(label, j, k, {Qt::AlignTop, Qt::AlignLeft});
         k++;
     }
     detectWatermark(fileList[0]);
@@ -54,8 +54,8 @@ void cropMenu::loadImages(QStringList fileList)
 void cropMenu::detectWatermark(QString fileName){
     //reads in image
     cv::Mat img = cv::imread(fileName.toStdString(), cv::IMREAD_COLOR);
-    cv::Mat watermark = cv::imread("C:/Users/Bryan/Documents/Computer Science/CMSC 437/project-team-fortress/Cropped Ifunny Watermark 140 x 20.png", cv::IMREAD_COLOR);
-    if(img.empty()){
+    cv::Mat watermark = cv::imread(watermarkFilePath, cv::IMREAD_COLOR);
+    if(img.empty() || watermark.empty()){
         std::cout << "!!! Failed imread(): image not found" << std::endl;
         return;
     }
