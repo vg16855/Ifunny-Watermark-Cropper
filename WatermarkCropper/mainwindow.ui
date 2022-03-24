@@ -34,14 +34,14 @@
     <item row="1" column="0">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="chooseImages">
         <property name="text">
          <string>Choose Images</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="chooseFolder">
         <property name="text">
          <string>Choose Folder</string>
         </property>

@@ -24,19 +24,23 @@ void MainWindow::openCropMenu(){
     connect(crop, &cropMenu::firstWindow, this, &MainWindow::show);
 }
 
-void MainWindow::on_pushButton_clicked()
+
+void MainWindow::on_chooseImages_clicked()
 {
     //Choose Images
     openCropMenu();
-    QStringList fileList = QFileDialog::getOpenFileNames();
+    QStringList fileList = QFileDialog::getOpenFileNames(this,
+                                                         "Select one or more files to open",
+                                                         "/home",
+                                                         "Images (*.png *.webp *.jpeg *.jfif *.jpg"
+                                                         "*.tif *.tiff *tga *.bmp*)");
     crop->loadImages(fileList);
     crop->show();
     this->close();
-
 }
 
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_chooseFolder_clicked()
 {
     //Choose Folder
     crop->show();

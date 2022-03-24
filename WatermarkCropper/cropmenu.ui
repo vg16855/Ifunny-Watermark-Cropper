@@ -7,30 +7,18 @@
     <x>0</x>
     <y>0</y>
     <width>1280</width>
-    <height>720</height>
+    <height>736</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <property name="leftMargin">
-    <number>8</number>
-   </property>
-   <property name="topMargin">
-    <number>8</number>
-   </property>
-   <property name="rightMargin">
-    <number>8</number>
-   </property>
-   <property name="bottomMargin">
-    <number>8</number>
-   </property>
    <item row="0" column="0" rowspan="2">
     <widget class="QScrollArea" name="scrollArea">
      <property name="minimumSize">
       <size>
-       <width>665</width>
+       <width>650</width>
        <height>720</height>
       </size>
      </property>
@@ -55,7 +43,7 @@
         <height>718</height>
        </rect>
       </property>
-      <layout class="QGridLayout" name="imageGridView" rowstretch="0" columnstretch="0" rowminimumheight="0" columnminimumwidth="0">
+      <layout class="QGridLayout" name="imageGridView" rowstretch="0" columnstretch="0">
        <property name="leftMargin">
         <number>10</number>
        </property>
@@ -75,10 +63,10 @@
      </widget>
     </widget>
    </item>
-   <item row="0" column="2">
+   <item row="0" column="1">
     <widget class="QWidget" name="widget" native="true"/>
    </item>
-   <item row="1" column="2">
+   <item row="1" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0">
      <property name="spacing">
       <number>0</number>
