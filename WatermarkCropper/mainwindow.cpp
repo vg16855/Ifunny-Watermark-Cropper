@@ -11,8 +11,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->setWindowTitle("Ifunny Watermark Cropper");
-    crop = new cropMenu();
-    connect(crop, &cropMenu::firstWindow, this, &MainWindow::show);
 }
 
 MainWindow::~MainWindow()
@@ -20,11 +18,16 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::openCropMenu(){
+    crop = new cropMenu();
+    crop->setAttribute(Qt::WA_DeleteOnClose);
+    connect(crop, &cropMenu::firstWindow, this, &MainWindow::show);
+}
 
 void MainWindow::on_pushButton_clicked()
 {
     //Choose Images
-
+    openCropMenu();
     QStringList fileList = QFileDialog::getOpenFileNames();
     crop->loadImages(fileList);
     crop->show();

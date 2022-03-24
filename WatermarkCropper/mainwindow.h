@@ -24,6 +24,7 @@ private slots:
 
 
 private:
+    void openCropMenu();
     Ui::MainWindow *ui;
     cropMenu *crop;
 };

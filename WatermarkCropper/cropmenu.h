@@ -15,6 +15,7 @@ public:
     explicit cropMenu(QWidget *parent = nullptr);
     ~cropMenu();
     void loadImages(QStringList);
+    void detectWatermark(QString);
 
 signals:
     void firstWindow();
