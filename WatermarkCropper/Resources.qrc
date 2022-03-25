@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/MyImages">
+        <file>Images/icons8-about-32.png</file>
+        <file>Images/icons8-close-32.png</file>
+        <file>Images/icons8-settings-32.png</file>
+        <file>Images/Cropped Ifunny Watermark 140 x 20.png</file>
+    </qresource>
+</RCC>

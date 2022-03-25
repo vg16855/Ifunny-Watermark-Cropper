@@ -18,7 +18,7 @@ public:
     explicit cropMenu(QWidget *parent = nullptr);
     ~cropMenu();
     void loadImages(QStringList);
-    void detectWatermark(cv::Mat, cv::Mat);
+    float detectWatermark(cv::Mat, cv::Mat);
     cv::Mat createHistogram(QString);
 
 

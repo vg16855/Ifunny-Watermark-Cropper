@@ -44,13 +44,5 @@ else:unix{ LIBS += -L$$PWD/../../../../../../../opencv/build/x64/vc15/lib/ -lope
 INCLUDEPATH += $$PWD/../../../../../../../opencv/build/include
 DEPENDPATH += $$PWD/../../../../../../../opencv/build/include
 
-DISTFILES += \
-    Resources/Cropped Ifunny Watermark 140 x 20.png \
-    Resources/Cropped Ifunny Watermark 140 x 20.png \
-    Resources/Cropped Ifunny Watermark 140 x 20.png \
-    Resources/icons8-about-32.png \
-    Resources/icons8-close-32.png \
-    Resources/icons8-settings-32.png
-
 RESOURCES += \
     Resources.qrc

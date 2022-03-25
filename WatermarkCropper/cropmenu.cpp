@@ -4,6 +4,7 @@
 #include <QSizePolicy>
 #include <QCheckBox>
 #include <QProgressDialog>
+#include <QFileInfo>
 #include <opencv2/opencv.hpp>
 
 cv::String watermarkFilePath = "C:/Users/Bryan/Documents/Computer Science/CMSC 437/project-team-fortress/WatermarkCropper/Images/Cropped Ifunny Watermark 140 x 20.png";
@@ -16,7 +17,7 @@ float hRanges[] = {0,180};
 float sRanges[] = { 0, 256 };
 const float* ranges[] = { hRanges, sRanges };
 int channels[] = {0,1};
-int compareMethod = 0;
+int compareMethod = 3;
 
 cropMenu::cropMenu(QWidget *parent) :
     QWidget(parent),
@@ -54,7 +55,7 @@ void cropMenu::loadImages(QStringList fileList)
     //Loads images into grid view
     int j = 0;
     int k = 0;
-
+    int validCounter = 0;
     for(int i = 0; i < fileList.length(); i++){
         std::cout << fileList[i].toStdString() << std::endl;
         if(k > 5){
@@ -80,19 +81,20 @@ void cropMenu::loadImages(QStringList fileList)
         label->setAlignment(Qt::AlignCenter);
         ui->imageGridView->addWidget(label, j, k, {Qt::AlignTop, Qt::AlignLeft});
 
-        QCheckBox *checkBox = new QCheckBox(label);
+        QCheckBox *checkBox = new QCheckBox(ui->imageGridView->itemAt(validCounter)->widget());
         checkBox->setCheckable(true);
 
         connect(checkBox, &QCheckBox::stateChanged, [=](bool checked) {
             if (checked)
-                emit checkBoxChecked(checkBox, i, fileList[i]);
+                emit checkBoxChecked(checkBox, validCounter, fileList[i]);
             else{
-                emit checkBoxChecked(checkBox, i, fileList[i]);
+                emit checkBoxChecked(checkBox, validCounter, fileList[i]);
             }
         });
 
         validImages.push_back(std::make_pair(fileList[i], false));
         k++;
+        validCounter++;
         imageLoadProgress.setValue(i+1);
 
     }
@@ -104,10 +106,18 @@ void cropMenu::loadImages(QStringList fileList)
     QProgressDialog imageComparison("Processing Images", "Abort", 0, fileList.size(), this);
     imageComparison.setWindowModality(Qt::WindowModal);
     imageComparison.show();
+    //std::cout << checkBoxes.size() << std::endl;
 
     for (int i = 0; i < numItems; i++){
         cv::Mat imageToCheck = createHistogram(validImages[i].first);
-        detectWatermark(imageToCheck, watermark);
+        float score = detectWatermark(imageToCheck, watermark);
+
+        if(score < .8){
+            QCheckBox* checkBox;
+            checkBox = ui->imageGridView->itemAt(i)->widget()->findChild<QCheckBox*>();
+            checkBox->setCheckState(Qt::Checked);
+        }
+
         imageComparison.setValue(i+1);
     }
 }
@@ -135,11 +145,12 @@ cv::Mat cropMenu::createHistogram(QString fileName){
     return histImg;
 }
 
-void cropMenu::detectWatermark(cv::Mat img, cv::Mat watermark){
+float cropMenu::detectWatermark(cv::Mat img, cv::Mat watermark){
 
     //compares the watermark with the bottom right corner of the image
-    double score = cv::compareHist(img, watermark, compareMethod);
+    float score = cv::compareHist(img, watermark, compareMethod);
     std::cout << "Comparison Score Method "<< compareMethod << ": " << score << std::endl;
+    return score;
 }
 
 void cropMenu::on_goBack_clicked()
@@ -153,12 +164,23 @@ void cropMenu::on_cropImages_clicked()
 {
     for(int i = 0; i < validImages.size(); i++){
         std::cout << validImages[i].second << std::endl;
+        if(validImages[i].second){
+            QImage original(validImages[i].first);
+            QRect rect(0, 0, original.width(), original.height()-20);
+            QImage cropped = original.copy(rect);
+            QFile f(validImages[i].first);
+            QFileInfo fileInfo(f);
+            QString fileName(fileInfo.fileName());
+            bool successful = cropped.save(fileName, nullptr, 100);
+        }
     }
+    close();
 }
+
 void cropMenu::checkBoxChecked(QCheckBox *checkBox, int pos, QString filePath){
     std::cout << "Filepath: " << filePath.toStdString() << std::endl;
-    std::cout << pos-1 << std::endl;
-    validImages[pos-1].second ^= true;
+    std::cout << pos << std::endl;
+    validImages[pos].second ^= true;
 
 }
 void cropMenu::closeEvent(QCloseEvent* event)
