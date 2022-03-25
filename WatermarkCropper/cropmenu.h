@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <opencv2/opencv.hpp>
+#include <QCheckBox>
+
 
 namespace Ui {
 class cropMenu;
@@ -19,16 +21,28 @@ public:
     void detectWatermark(cv::Mat, cv::Mat);
     cv::Mat createHistogram(QString);
 
+
 signals:
     void firstWindow();
+
+
+
 
 private slots:
     void on_goBack_clicked();
 
     void on_cropImages_clicked();
 
+    void closeEvent(QCloseEvent*);
+
+    void checkBoxChecked(QCheckBox*, int, QString);
+
+
 private:
     Ui::cropMenu *ui;
+
+    std::vector<std::pair<QString, bool>> validImages;
+
 };
 
 #endif // CROPMENU_H

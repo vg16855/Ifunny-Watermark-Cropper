@@ -11,15 +11,18 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    cropmenu.cpp
+    cropmenu.cpp \
+    settings.cpp
 
 HEADERS += \
     mainwindow.h \
-    cropmenu.h
+    cropmenu.h \
+    settings.h
 
 FORMS += \
     mainwindow.ui \
-    cropmenu.ui
+    cropmenu.ui \
+    settings.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -40,3 +43,14 @@ else:unix{ LIBS += -L$$PWD/../../../../../../../opencv/build/x64/vc15/lib/ -lope
 
 INCLUDEPATH += $$PWD/../../../../../../../opencv/build/include
 DEPENDPATH += $$PWD/../../../../../../../opencv/build/include
+
+DISTFILES += \
+    Resources/Cropped Ifunny Watermark 140 x 20.png \
+    Resources/Cropped Ifunny Watermark 140 x 20.png \
+    Resources/Cropped Ifunny Watermark 140 x 20.png \
+    Resources/icons8-about-32.png \
+    Resources/icons8-close-32.png \
+    Resources/icons8-settings-32.png
+
+RESOURCES += \
+    Resources.qrc

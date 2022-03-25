@@ -23,6 +23,8 @@ private slots:
 
     void on_chooseFolder_clicked();
 
+    void on_actionOptions_triggered();
+
 private:
     void openCropMenu();
     Ui::MainWindow *ui;
