@@ -9,9 +9,10 @@
 #include <QFileInfo>
 #include <opencv2/opencv.hpp>
 #include <QAbstractButton>
+#include <QFileDialog>
+#include <QString>
 #include <QStandardPaths>
 
-cv::String watermarkFilePath = "C:/Users/seroh/Documents/Computer Science/CMSC 437/project-team-fortress/WatermarkCropper/Images/Cropped Ifunny Watermark 140 x 20.png";
 //Initializes Values
 int hBins = 50;
 int sBins = 60;
@@ -48,6 +49,10 @@ cropMenu::~cropMenu()
 
 void cropMenu::loadImages(QStringList fileList)
 {
+    QString watermarkPath = QCoreApplication::applicationDirPath();
+    watermarkPath.append("/Cropped Ifunny Watermark 140 x 20.png");
+    cv::String watermarkFilePath = watermarkPath.toStdString();
+
     QProgressDialog imageLoadProgress("Loading Images", "Abort", 0, fileList.size(), this);
     imageLoadProgress.setWindowModality(Qt::WindowModal);
     imageLoadProgress.show();
@@ -178,6 +183,10 @@ void cropMenu::on_goBack_clicked()
 void cropMenu::on_cropImages_clicked()
 {
     QString savePath = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+    QDir directory = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
+                                                 savePath,
+                                                 QFileDialog::ShowDirsOnly
+                                                 | QFileDialog::DontResolveSymlinks);
 
     for(int i = 0; i < validImages.size(); i++){
         std::cout << validImages[i].second << std::endl;
