@@ -134,7 +134,6 @@ void cropMenu::loadImages(QStringList fileList)
             QCheckBox* checkBox;
             checkBox = ui->imageGridView->itemAt(i)->widget()->findChild<QCheckBox*>();
             checkBox->setCheckState(Qt::Checked);
-            numChecked++;
         }
 
         imageComparison.setValue(i+1);
@@ -192,11 +191,11 @@ void cropMenu::on_cropImages_clicked()
         std::cout << validImages[i].second << std::endl;
         if(validImages[i].second){
             QImage original(validImages[i].first);
-            QRect rect(0, 0, original.width(), original.height()-20);
+            QRect rect(0, 0, original.width(), original.height() - 20);
             QImage cropped = original.copy(rect);
             QFile f(validImages[i].first);
             QFileInfo fileInfo(f);
-            QString fileName(fileInfo.fileName());
+            QString fileName(directory.absoluteFilePath(fileInfo.fileName()));
             bool successful = cropped.save(fileName, nullptr, 100);
         }
     }
