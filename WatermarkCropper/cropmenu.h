@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <opencv2/opencv.hpp>
 #include <QCheckBox>
-
+#include <clickable.h>
 
 namespace Ui {
 class cropMenu;
@@ -36,6 +36,8 @@ private slots:
     void closeEvent(QCloseEvent*);
 
     void checkBoxChecked(QCheckBox*, int, QString);
+
+    void labelClicked(QString);
 
 
 private:

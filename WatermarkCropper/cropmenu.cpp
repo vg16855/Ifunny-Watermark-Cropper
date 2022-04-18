@@ -1,4 +1,5 @@
 #include "cropmenu.h"
+#include "clickable.h"
 #include "ui_cropmenu.h"
 #include <QLabel>
 #include <QSizePolicy>
@@ -6,18 +7,20 @@
 #include <QProgressDialog>
 #include <QFileInfo>
 #include <opencv2/opencv.hpp>
+#include <QAbstractButton>
 
-cv::String watermarkFilePath = "C:/Users/Bryan/Documents/Computer Science/CMSC 437/project-team-fortress/WatermarkCropper/Images/Cropped Ifunny Watermark 140 x 20.png";
+cv::String watermarkFilePath = "C:/Users/seroh/Documents/Computer Science/CMSC 437/project-team-fortress/WatermarkCropper/Images/Cropped Ifunny Watermark 140 x 20.png";
 //Initializes Values
 int hBins = 50;
 int sBins = 60;
 int histSize[] = {hBins, sBins};
+int numChecked = 0;
 
 float hRanges[] = {0,180};
 float sRanges[] = { 0, 256 };
 const float* ranges[] = { hRanges, sRanges };
 int channels[] = {0,1};
-int compareMethod = 3;
+int compareMethod = 0;
 
 cropMenu::cropMenu(QWidget *parent) :
     QWidget(parent),
@@ -75,21 +78,28 @@ void cropMenu::loadImages(QStringList fileList)
         }
         QPixmap bitmap;
         bitmap.convertFromImage(image, Qt::AutoColor);
-        QLabel *label = new QLabel();
+        Clickable *label = new Clickable(this);
         label->setFixedSize(100, 100);
         label->setPixmap(bitmap.scaled(100,100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         label->setAlignment(Qt::AlignCenter);
         ui->imageGridView->addWidget(label, j, k, {Qt::AlignTop, Qt::AlignLeft});
+        connect(label , &Clickable::clicked, this, [=](){emit(labelClicked(fileList[i]));});
 
         QCheckBox *checkBox = new QCheckBox(ui->imageGridView->itemAt(validCounter)->widget());
         checkBox->setCheckable(true);
 
         connect(checkBox, &QCheckBox::stateChanged, [=](bool checked) {
-            if (checked)
+            if (checked){
                 emit checkBoxChecked(checkBox, validCounter, fileList[i]);
+                std::cout << "Checked" << std::endl;
+                numChecked++;
+            }
             else{
                 emit checkBoxChecked(checkBox, validCounter, fileList[i]);
+                std::cout << "Unchecked" << std::endl;
+                numChecked--;
             }
+            ui->cropNumber->setText(QString("Images to Crop:  %1").arg(numChecked));
         });
 
         validImages.push_back(std::make_pair(fileList[i], false));
@@ -100,6 +110,7 @@ void cropMenu::loadImages(QStringList fileList)
     }
     //Locates watermarks
     int numItems = ui->imageGridView->count();
+    ui->imageNumber->setText(QString("Number of Images:  %1").arg(numItems));
     cv::Mat watermark = createHistogram(QString::fromStdString(watermarkFilePath));
     std::cout << "Items to check: " <<numItems << std::endl;
 
@@ -112,14 +123,16 @@ void cropMenu::loadImages(QStringList fileList)
         cv::Mat imageToCheck = createHistogram(validImages[i].first);
         float score = detectWatermark(imageToCheck, watermark);
 
-        if(score < .8){
+        if(score > .5){
             QCheckBox* checkBox;
             checkBox = ui->imageGridView->itemAt(i)->widget()->findChild<QCheckBox*>();
             checkBox->setCheckState(Qt::Checked);
+            numChecked++;
         }
 
         imageComparison.setValue(i+1);
     }
+    ui->cropNumber->setText(QString("Images to Crop:  %1").arg(numChecked));
 }
 
 //Creates Histogram matrix based on given image
@@ -181,8 +194,18 @@ void cropMenu::checkBoxChecked(QCheckBox *checkBox, int pos, QString filePath){
     std::cout << "Filepath: " << filePath.toStdString() << std::endl;
     std::cout << pos << std::endl;
     validImages[pos].second ^= true;
-
 }
+
+void cropMenu::labelClicked(QString filePath){
+    int height = ui->previewLabel->height();
+    int width = ui->previewLabel->width();
+    QPixmap pix(filePath);
+    ui->previewLabel->setPixmap(pix.scaled(width,height, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    std::cout << "Label Clicked!!!" << std::endl;
+}
+
+
+
 void cropMenu::closeEvent(QCloseEvent* event)
 {
     emit firstWindow();
