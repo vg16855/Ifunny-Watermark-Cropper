@@ -3,8 +3,11 @@
 
 #include "cropmenu.h"
 #include "settings.h"
+#include <QStandardPaths>
 
 #include <QFileDialog>
+
+const QString defaultPath = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -30,9 +33,8 @@ void MainWindow::on_chooseImages_clicked()
 {
     //Choose Images
     openCropMenu();
-    QStringList fileList = QFileDialog::getOpenFileNames(this,
-                                                         "Select one or more files to open",
-                                                         "/home",
+    QStringList fileList = QFileDialog::getOpenFileNames(this, "Select one or more files to open",
+                                                         defaultPath,
                                                          "Images (*.png *.webp *.jpeg *.jfif *.jpg *.tif *.tiff *.tga *.bmp *.JPG *.PNG)");
     crop->loadImages(fileList);
     crop->show();
@@ -45,7 +47,7 @@ void MainWindow::on_chooseFolder_clicked()
     openCropMenu();
     //Choose Folder
     QDir directory = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
-                                                 "/home",
+                                                 defaultPath,
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
     std::cout << "Turning directory into images" << std::endl;

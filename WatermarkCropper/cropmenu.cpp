@@ -1,5 +1,6 @@
 #include "cropmenu.h"
 #include "clickable.h"
+#include "qdir.h"
 #include "ui_cropmenu.h"
 #include <QLabel>
 #include <QSizePolicy>
@@ -8,6 +9,7 @@
 #include <QFileInfo>
 #include <opencv2/opencv.hpp>
 #include <QAbstractButton>
+#include <QStandardPaths>
 
 cv::String watermarkFilePath = "C:/Users/seroh/Documents/Computer Science/CMSC 437/project-team-fortress/WatermarkCropper/Images/Cropped Ifunny Watermark 140 x 20.png";
 //Initializes Values
@@ -175,6 +177,8 @@ void cropMenu::on_goBack_clicked()
 
 void cropMenu::on_cropImages_clicked()
 {
+    QString savePath = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+
     for(int i = 0; i < validImages.size(); i++){
         std::cout << validImages[i].second << std::endl;
         if(validImages[i].second){
