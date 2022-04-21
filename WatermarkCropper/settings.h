@@ -16,21 +16,21 @@ public:
     ~settings();
 
 private slots:
-    void on_bhattacharyyaSpinBox_valueChanged(double arg1);
 
-    void on_intersectionSpinBox_valueChanged(double arg1);
 
-    void on_chiSquareSpinBox_valueChanged(double arg1);
+    void on_comparisonComboBox_currentIndexChanged(int index);
 
-    void on_correlationSpinBox_valueChanged(double arg1);
+    void on_histSpinBox_valueChanged(double arg1);
 
-    void on_histogramComboBox_currentIndexChanged(int index);
+    void on_histDefault_clicked();
 
-    void on_comboBox_2_currentIndexChanged(int index);
+    void on_normSpinBox_valueChanged(double arg1);
 
-    void on_buttonBox_accepted();
+    void on_normDefault_clicked();
 
-    void on_buttonBox_rejected();
+    void on_dialogButton_accepted();
+
+    void on_dialogButton_rejected();
 
 private:
     Ui::settings *ui;

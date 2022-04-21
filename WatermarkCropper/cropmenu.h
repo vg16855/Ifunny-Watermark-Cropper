@@ -4,7 +4,9 @@
 #include <QWidget>
 #include <opencv2/opencv.hpp>
 #include <QCheckBox>
+#include <QDir>
 #include <clickable.h>
+#include <QProgressDialog>
 
 namespace Ui {
 class cropMenu;
@@ -19,6 +21,7 @@ public:
     ~cropMenu();
     void loadImages(QStringList);
     float detectWatermark(cv::Mat, cv::Mat);
+    float compareImage(QString, cv::Mat);
     cv::Mat createHistogram(QString);
 
 
@@ -27,11 +30,8 @@ signals:
 
 
 
-
 private slots:
     void on_goBack_clicked();
-
-    void on_cropImages_clicked();
 
     void closeEvent(QCloseEvent*);
 
@@ -39,11 +39,24 @@ private slots:
 
     void labelClicked(QString);
 
+    void saveImages(QDir);
+
+    void on_save_clicked();
+
+    void on_saveAs_clicked();
+
+    void myCustomCancel();
 
 private:
     Ui::cropMenu *ui;
 
     std::vector<std::pair<QString, bool>> validImages;
+
+    QProgressDialog *imageComparison;
+
+    QProgressDialog *imageLoadProgress;
+
+    QProgressDialog *imageSaveProgress;
 
 };
 

@@ -9,59 +9,53 @@ settings::settings(QWidget *parent) :
     ui->setupUi(this);
 }
 
-double correlationThreshold = .5;
-double chiSquareThreshold;
-double intersectionThreshold;
-double bhattacharyyaThreshold;
+double histogramThreshold = .5;
+double matrixNormthreshold = 1;
 
 settings::~settings()
 {
     delete ui;
 }
 
-void settings::on_bhattacharyyaSpinBox_valueChanged(double arg1)
+
+
+void settings::on_comparisonComboBox_currentIndexChanged(int index)
 {
-    bhattacharyyaThreshold = arg1;
+    std::cout << "Combobox Changed" << std::endl;
 }
 
 
-void settings::on_intersectionSpinBox_valueChanged(double arg1)
-{
-    intersectionThreshold = arg1;
-}
-
-
-void settings::on_chiSquareSpinBox_valueChanged(double arg1)
-{
-    chiSquareThreshold = arg1;
-}
-
-
-void settings::on_correlationSpinBox_valueChanged(double arg1)
-{
-    correlationThreshold = arg1;
-}
-
-
-void settings::on_histogramComboBox_currentIndexChanged(int index)
-{
-    std::cout << "Index changed" << std::endl;
-}
-
-
-void settings::on_comboBox_2_currentIndexChanged(int index)
-{
-    std::cout << "Index changed" << std::endl;
-}
-
-
-void settings::on_buttonBox_accepted()
+void settings::on_histSpinBox_valueChanged(double arg1)
 {
 
 }
 
 
-void settings::on_buttonBox_rejected()
+void settings::on_histDefault_clicked()
+{
+
+}
+
+
+void settings::on_normSpinBox_valueChanged(double arg1)
+{
+
+}
+
+
+void settings::on_normDefault_clicked()
+{
+
+}
+
+
+void settings::on_dialogButton_accepted()
+{
+
+}
+
+
+void settings::on_dialogButton_rejected()
 {
 
 }

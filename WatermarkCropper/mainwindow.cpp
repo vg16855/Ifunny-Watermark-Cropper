@@ -36,9 +36,12 @@ void MainWindow::on_chooseImages_clicked()
     QStringList fileList = QFileDialog::getOpenFileNames(this, "Select one or more files to open",
                                                          defaultPath,
                                                          "Images (*.png *.webp *.jpeg *.jfif *.jpg *.tif *.tiff *.tga *.bmp *.JPG *.PNG)");
+    if(fileList.empty()){
+        return;
+    }
     crop->loadImages(fileList);
     crop->show();
-    this->close();
+
 }
 
 
@@ -50,6 +53,11 @@ void MainWindow::on_chooseFolder_clicked()
                                                  defaultPath,
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
+
+    if(directory.entryList().empty()){
+        return;
+    }
+
     std::cout << "Turning directory into images" << std::endl;
 
     QStringList list = directory.entryList(QDir::Files);
@@ -61,7 +69,6 @@ void MainWindow::on_chooseFolder_clicked()
     }
     crop->loadImages(images);
     crop->show();
-    this->close();
 }
 
 
@@ -69,5 +76,11 @@ void MainWindow::on_actionOptions_triggered()
 {
     settings *setting = new settings();
     setting->show();
+}
+
+
+void MainWindow::on_actionQuit_triggered()
+{
+    QApplication::quit();
 }
 

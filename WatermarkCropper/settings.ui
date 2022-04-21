@@ -22,6 +22,11 @@
     <height>300</height>
    </size>
   </property>
+  <property name="font">
+   <font>
+    <pointsize>12</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
@@ -29,63 +34,93 @@
    <item>
     <layout class="QFormLayout" name="formLayout">
      <item row="0" column="0">
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="compareLabel">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
        <property name="text">
-        <string>Histogram comparison algorithm</string>
+        <string>Comparison Method</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QComboBox" name="histogramComboBox">
+      <widget class="QComboBox" name="comparisonComboBox">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
        <item>
         <property name="text">
-         <string>Correlation</string>
+         <string>Histogram</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Chi-Square</string>
+         <string>Norm</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Intersection</string>
+         <string/>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Bhattacharrya</string>
+         <string/>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string/>
         </property>
        </item>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="histLabel">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
        <property name="text">
-        <string>Correlation Threshold &gt;</string>
+        <string>Hist Threshold &lt;</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
        <item>
-        <widget class="QDoubleSpinBox" name="correlationSpinBox">
+        <widget class="QDoubleSpinBox" name="histSpinBox">
          <property name="minimumSize">
           <size>
            <width>150</width>
            <height>0</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
          <property name="minimum">
           <double>0.000000000000000</double>
          </property>
          <property name="value">
-          <double>0.500000000000000</double>
+          <double>0.700000000000000</double>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="histDefault">
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Default</string>
          </property>
@@ -94,16 +129,21 @@
       </layout>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="normLabel">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
        <property name="text">
-        <string>Chi-Square Threshold &gt;</string>
+        <string>Norm Threshold &lt;</string>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QDoubleSpinBox" name="chiSquareSpinBox">
+        <widget class="QDoubleSpinBox" name="normSpinBox">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -116,113 +156,29 @@
            <height>0</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
          <property name="value">
-          <double>7.000000000000000</double>
+          <double>1.000000000000000</double>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="normDefault">
          <property name="text">
           <string>Default</string>
          </property>
         </widget>
        </item>
       </layout>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Intersection Threshold &gt;</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QDoubleSpinBox" name="intersectionSpinBox">
-         <property name="minimumSize">
-          <size>
-           <width>150</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="value">
-          <double>6.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_3">
-         <property name="text">
-          <string>Default</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>Bhattacharyya Threshold &lt;</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <item>
-        <widget class="QDoubleSpinBox" name="bhattacharyyaSpinBox">
-         <property name="minimumSize">
-          <size>
-           <width>150</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="value">
-          <double>0.800000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_4">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Default</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>Cropped image save option</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QComboBox" name="comboBox_2">
-       <item>
-        <property name="text">
-         <string>Save New</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Overwrite</string>
-        </property>
-       </item>
-      </widget>
      </item>
     </layout>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
+    <widget class="QDialogButtonBox" name="dialogButton">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -236,7 +192,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>dialogButton</sender>
    <signal>accepted()</signal>
    <receiver>settings</receiver>
    <slot>accept()</slot>
@@ -252,7 +208,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>dialogButton</sender>
    <signal>rejected()</signal>
    <receiver>settings</receiver>
    <slot>reject()</slot>
