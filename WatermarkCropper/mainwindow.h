@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include "cropmenu.h"
-
+#include "settings.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -33,5 +33,6 @@ private:
     void openCropMenu();
     Ui::MainWindow *ui;
     cropMenu *crop;
+    settings *setting;
 };
 #endif // MAINWINDOW_H

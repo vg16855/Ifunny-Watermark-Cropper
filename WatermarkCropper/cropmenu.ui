@@ -99,7 +99,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="Resources.qrc">:/MyImages/Images/icons8-picture-32.png</pixmap>
+          <pixmap resource="Resources.qrc">:/Images/icons8-picture-32.png</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -110,7 +110,7 @@
         <widget class="QLabel" name="imageNumber">
          <property name="maximumSize">
           <size>
-           <width>160</width>
+           <width>175</width>
            <height>16777215</height>
           </size>
          </property>
@@ -134,7 +134,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="Resources.qrc">:/MyImages/Images/icons8-crop-32.png</pixmap>
+          <pixmap resource="Resources.qrc">:/Images/icons8-crop-32.png</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -151,18 +151,18 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>160</width>
+           <width>175</width>
            <height>16777215</height>
           </size>
          </property>
          <property name="text">
-          <string>Number to Crop: 0</string>
+          <string>Images to Crop: 0</string>
          </property>
          <property name="textFormat">
           <enum>Qt::RichText</enum>
          </property>
          <property name="pixmap">
-          <pixmap resource="Resources.qrc">:/MyImages/Images/icons8-crop-32.png</pixmap>
+          <pixmap>:/MyImages/Images/icons8-crop-32.png</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -228,10 +228,13 @@
         <enum>QFrame::Box</enum>
        </property>
        <property name="text">
-        <string>Image Preview</string>
+        <string/>
        </property>
        <property name="textFormat">
         <enum>Qt::RichText</enum>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="Resources.qrc">:/Images/icons8-picture-64.png</pixmap>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -248,7 +251,7 @@
          <property name="minimumSize">
           <size>
            <width>100</width>
-           <height>20</height>
+           <height>25</height>
           </size>
          </property>
          <property name="maximumSize">
@@ -267,12 +270,18 @@
          </property>
          <property name="icon">
           <iconset resource="Resources.qrc">
-           <normaloff>:/MyImages/Images/icons8-cancel-32.png</normaloff>:/MyImages/Images/icons8-cancel-32.png</iconset>
+           <normaloff>:/Images/icons8-cancel-32.png</normaloff>:/Images/icons8-cancel-32.png</iconset>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="save">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>25</height>
+          </size>
+         </property>
          <property name="maximumSize">
           <size>
            <width>100</width>
@@ -289,7 +298,7 @@
          </property>
          <property name="icon">
           <iconset resource="Resources.qrc">
-           <normaloff>:/MyImages/Images/icons8-save-32.png</normaloff>:/MyImages/Images/icons8-save-32.png</iconset>
+           <normaloff>:/Images/icons8-save-32.png</normaloff>:/Images/icons8-save-32.png</iconset>
          </property>
         </widget>
        </item>
@@ -317,7 +326,7 @@
          </property>
          <property name="icon">
           <iconset resource="Resources.qrc">
-           <normaloff>:/MyImages/Images/icons8-save-as-32.png</normaloff>:/MyImages/Images/icons8-save-as-32.png</iconset>
+           <normaloff>:/Images/icons8-save-as-32.png</normaloff>:/Images/icons8-save-as-32.png</iconset>
          </property>
         </widget>
        </item>

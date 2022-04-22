@@ -32,13 +32,13 @@ void MainWindow::openCropMenu(){
 void MainWindow::on_chooseImages_clicked()
 {
     //Choose Images
-    openCropMenu();
     QStringList fileList = QFileDialog::getOpenFileNames(this, "Select one or more files to open",
                                                          defaultPath,
                                                          "Images (*.png *.webp *.jpeg *.jfif *.jpg *.tif *.tiff *.tga *.bmp *.JPG *.PNG)");
     if(fileList.empty()){
         return;
     }
+    openCropMenu();
     crop->loadImages(fileList);
     crop->show();
 
@@ -47,7 +47,6 @@ void MainWindow::on_chooseImages_clicked()
 
 void MainWindow::on_chooseFolder_clicked()
 {
-    openCropMenu();
     //Choose Folder
     QDir directory = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
                                                  defaultPath,
@@ -55,9 +54,11 @@ void MainWindow::on_chooseFolder_clicked()
                                                  | QFileDialog::DontResolveSymlinks);
 
     //If user doesn't select folder
-    if(directory.entryList().empty()){
+    if(directory.dirName() == '.'){
         return;
     }
+
+    openCropMenu();
 
     QStringList list = directory.entryList(QDir::Files);
     QStringList images = QStringList(list.size());
@@ -79,8 +80,10 @@ void MainWindow::on_chooseFolder_clicked()
 
 void MainWindow::on_actionOptions_triggered()
 {
-    settings *setting = new settings();
+    setting = new settings();
     setting->show();
+    setting->setAttribute(Qt::WA_DeleteOnClose);
+
 }
 
 

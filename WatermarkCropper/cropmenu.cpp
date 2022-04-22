@@ -60,14 +60,15 @@ void cropMenu::loadImages(QStringList fileList)
     std::cout << initialFilePath.toStdString() << std::endl;
 
     //Get filepath of watermark(THE APPLICATION FOLDER)
-    QString watermarkPath = QCoreApplication::applicationDirPath();
+    watermarkPath = QCoreApplication::applicationDirPath();
     watermarkPath.append("/Cropped Ifunny Watermark 140 x 20.png");
-    cv::String watermarkFilePath = watermarkPath.toStdString();
+    watermarkFilePath = watermarkPath.toStdString();
 
     //Setup loading bar for loading
-    imageLoadProgress = new QProgressDialog("Loading Images", "Abort", 0, fileList.size(), this);
+    QPointer<QProgressDialog> imageLoadProgress = new QProgressDialog("Loading Images", "Abort", 0, fileList.size(), this);
     imageLoadProgress->setWindowModality(Qt::WindowModal);
     imageLoadProgress->show();
+    imageLoadProgress->deleteLater();
     connect(imageLoadProgress, SIGNAL(canceled()), this, SLOT(myCustomCancel()));
 
     if(fileList.isEmpty()){
@@ -109,7 +110,7 @@ void cropMenu::loadImages(QStringList fileList)
         //Displays image on UI and makes it clickable
         QPixmap bitmap;
         bitmap.convertFromImage(image, Qt::AutoColor);
-        Clickable *label = new Clickable(this);
+        QPointer<Clickable> label = new Clickable(this);
         label->setFixedSize(100, 100);
         label->setPixmap(bitmap.scaled(100,100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         label->setAlignment(Qt::AlignCenter);
@@ -117,7 +118,7 @@ void cropMenu::loadImages(QStringList fileList)
         connect(label , &Clickable::clicked, this, [=](){emit(labelClicked(fileList[i]));});
 
         //Connects label to a checkbox
-        QCheckBox *checkBox = new QCheckBox(ui->imageGridView->itemAt(validCounter)->widget());
+        QPointer<QCheckBox> checkBox = new QCheckBox(ui->imageGridView->itemAt(validCounter)->widget());
         checkBox->setCheckable(true);
 
         connect(checkBox, &QCheckBox::stateChanged, [=](bool checked) {
@@ -144,11 +145,14 @@ void cropMenu::loadImages(QStringList fileList)
     //Displays info on screen
     int numItems = ui->imageGridView->count();
     ui->imageNumber->setText(QString("Number of Images:  %1").arg(numItems));
-    cv::Mat watermark = createHistogram(QString::fromStdString(watermarkFilePath));
-    std::cout << "Items to check: " <<numItems << std::endl;
+    detectWatermark();
+}
 
-    //Sets up new progress bar for identifying watermarks
-    imageComparison = new QProgressDialog("Identifying Watermarks", "Abort", 0, validImages.size(), this);
+void cropMenu::detectWatermark(){
+    std::cout << "Making Watermark Histogram" << std::endl;
+    std::cout << watermarkPath.toStdString() << std::endl;
+    cv::Mat watermark = createHistogram(watermarkPath);
+    QPointer<QProgressDialog> imageComparison = new QProgressDialog("Identifying Watermarks", "Abort", 0, validImages.size(), this);
     imageComparison->setWindowModality(Qt::WindowModal);
     imageComparison->show();
 
@@ -158,6 +162,7 @@ void cropMenu::loadImages(QStringList fileList)
     QSettings settings;
     float histogramThreshold = settings.value("thresh/hist").toDouble();
     float normThreshold = settings.value("thresh/norm").toDouble();
+    cv::Mat matWatermark = cv::imread(watermarkFilePath, cv::IMREAD_COLOR);
     for (int i = 0; i < validImages.size(); i++){
         if(imageComparison->wasCanceled())
             break;
@@ -171,7 +176,7 @@ void cropMenu::loadImages(QStringList fileList)
                 ui->cropNumber->setText(QString("Images to Crop:  %1").arg(numChecked));
                 continue;
             }
-            float score = detectWatermark(imageToCheck, watermark);
+            float score = histDetect(imageToCheck, watermark);
             if(score < histogramThreshold){
                 QCheckBox* checkBox;
                 checkBox = ui->imageGridView->itemAt(i)->widget()->findChild<QCheckBox*>();
@@ -182,8 +187,7 @@ void cropMenu::loadImages(QStringList fileList)
         }
         else if(settings.value("compare/algo").toInt() == NORM_INDEX){
             std::cout << "Performing Normalization Algorithm" << std::endl;
-            cv::Mat watermark = cv::imread(watermarkPath.toStdString(), cv::IMREAD_COLOR);
-            float score = compareImage(validImages[i].first, watermark);
+            float score = compareImage(validImages[i].first, matWatermark);
 
             if(score == -1){
                 std::cout << "Error Calculating Norm, try changing the file name" << std::endl;
@@ -226,7 +230,7 @@ cv::Mat cropMenu::createHistogram(QString fileName){
     return histImg;
 }
 
-float cropMenu::detectWatermark(cv::Mat img, cv::Mat watermark){
+float cropMenu::histDetect(cv::Mat img, cv::Mat watermark){
 
     //compares the watermark with the bottom right corner of the image
     float score = cv::compareHist(img, watermark, cv::HISTCMP_BHATTACHARYYA);
@@ -235,15 +239,14 @@ float cropMenu::detectWatermark(cv::Mat img, cv::Mat watermark){
 
 float cropMenu::compareImage(QString fileName, cv::Mat watermark){
     //error checking
-    cv::Mat img = cv::imread(fileName.toStdString(), cv::IMREAD_COLOR);
-    if(img.empty()){
+    cv::Mat image = cv::imread(fileName.toStdString(), cv::IMREAD_COLOR);
+    if(image.empty()){
         std::cout << "!!! Failed imread(): image not found" << std::endl;
         std::cout << "Offending File: " << fileName.toStdString() << std::endl;
         return -1;
     }
 
     //Get bottom right corner of image
-    cv::Mat image = cv::imread(fileName.toStdString(), cv::IMREAD_COLOR);
     cv::Mat corner = image(cv::Rect(image.cols-140, image.rows-20, 140, 20));
 
     //Compare two matrices
@@ -291,10 +294,10 @@ void cropMenu::closeEvent(QCloseEvent* event)
 }
 
 void cropMenu::saveImages(QDir directory){
-    imageSaveProgress = new QProgressDialog("Saving Images", "Abort", 0, validImages.size(), this);
+    QPointer<QProgressDialog> imageSaveProgress = new QProgressDialog("Saving Images", "Abort", 0, validImages.size(), this);
     imageSaveProgress->setWindowModality(Qt::WindowModal);
     imageSaveProgress->show();
-    connect(imageLoadProgress, SIGNAL(canceled()), this, SLOT(myCustomCancel()));
+    connect(imageSaveProgress, SIGNAL(canceled()), this, SLOT(myCustomCancel()));
 
     for(int i = 0; i < validImages.size(); i++){
         if(imageSaveProgress->wasCanceled())
@@ -317,7 +320,7 @@ void cropMenu::saveImages(QDir directory){
 
 void cropMenu::noImageMessage(){
     QMessageBox info;
-    info.setText("No watermarks are being detected, "
+    info.setText("No watermarks are being cropped, "
                  "check some images or try a "
                  "different set of images");
     info.setIcon(QMessageBox::Information);
@@ -349,7 +352,7 @@ void cropMenu::on_saveAs_clicked()
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
 
-    if(directory.exists()){
+    if(!directory.exists()){
         return;
     }
 

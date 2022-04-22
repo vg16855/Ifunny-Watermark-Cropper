@@ -97,6 +97,9 @@
            <pointsize>12</pointsize>
           </font>
          </property>
+         <property name="toolTip">
+          <string>Lower Number = More like the Watermark</string>
+         </property>
          <property name="minimum">
           <double>0.000000000000000</double>
          </property>
@@ -117,6 +120,9 @@
           <font>
            <pointsize>12</pointsize>
           </font>
+         </property>
+         <property name="toolTip">
+          <string>Default = 0.7</string>
          </property>
          <property name="text">
           <string>Default</string>
@@ -158,6 +164,9 @@
            <pointsize>12</pointsize>
           </font>
          </property>
+         <property name="toolTip">
+          <string>Lower Number = More like the Watermark</string>
+         </property>
          <property name="maximum">
           <double>1.000000000000000</double>
          </property>
@@ -171,6 +180,9 @@
        </item>
        <item>
         <widget class="QPushButton" name="normDefault">
+         <property name="toolTip">
+          <string>Default = 1.0</string>
+         </property>
          <property name="text">
           <string>Default</string>
          </property>

@@ -20,7 +20,8 @@ public:
     explicit cropMenu(QWidget *parent = nullptr);
     ~cropMenu();
     void loadImages(QStringList);
-    float detectWatermark(cv::Mat, cv::Mat);
+    float histDetect(cv::Mat, cv::Mat);
+    void detectWatermark();
     float compareImage(QString, cv::Mat);
     cv::Mat createHistogram(QString);
     void noImageMessage();
@@ -52,12 +53,9 @@ private:
     Ui::cropMenu *ui;
 
     std::vector<std::pair<QString, bool>> validImages;
+    QString watermarkPath;
+    std::string watermarkFilePath;
 
-    QProgressDialog *imageComparison;
-
-    QProgressDialog *imageLoadProgress;
-
-    QProgressDialog *imageSaveProgress;
 
 };
 
