@@ -54,14 +54,19 @@ void MainWindow::on_chooseFolder_clicked()
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
 
+    //If user doesn't select folder
     if(directory.entryList().empty()){
         return;
     }
 
-    std::cout << "Turning directory into images" << std::endl;
-
     QStringList list = directory.entryList(QDir::Files);
     QStringList images = QStringList(list.size());
+
+    //If folder contains no images
+    if(images.empty()){
+            std::cout << "Empty Folder Given" << std::endl;
+            return;
+        }
     for (int i = 1; i < list.size(); i++)
     {
         qDebug() << "Filename " << i << " = " << directory.filePath(list.at(i));

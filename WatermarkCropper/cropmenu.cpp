@@ -1,7 +1,8 @@
 #include "cropmenu.h"
 #include "clickable.h"
-#include <QDir>
+#include "settings.h"
 #include "ui_cropmenu.h"
+#include <QDir>
 #include <QLabel>
 #include <QCheckBox>
 #include <QProgressDialog>
@@ -15,12 +16,8 @@
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/imgproc.hpp"
 
-//Initializes Values
-enum comparisonMethod { histogram, matrixNorm };
-comparisonMethod method = histogram;
-
-float histogramThreshold = 0.7;
-float normThreshold = 1;
+const int HIST_INDEX = 0;
+const int NORM_INDEX = 1;
 
 int hBins = 180;
 int sBins = 256;
@@ -157,11 +154,22 @@ void cropMenu::loadImages(QStringList fileList)
     connect(imageComparison, SIGNAL(canceled()), this, SLOT(myCustomCancel()));
 
     //Identifies any watermarks in the imagelist
+    QSettings settings;
+    float histogramThreshold = settings.value("thresh/hist").toDouble();
+    float normThreshold = settings.value("thresh/norm").toDouble();
     for (int i = 0; i < validImages.size(); i++){
         if(imageComparison->wasCanceled())
             break;
-        if(method == histogram){
+        if(settings.value("compare/algo").toInt() == HIST_INDEX){
+            //Performing Histogram Algorithm
+            std::cout << "Performing Histogram Algorithm" << std::endl;
             cv::Mat imageToCheck = createHistogram(validImages[i].first);
+            if(imageToCheck.empty()){
+                std::cout << "Error Creating Histogram, try changing the file name" << std::endl;
+                imageComparison->setValue(i+1);
+                ui->cropNumber->setText(QString("Images to Crop:  %1").arg(numChecked));
+                continue;
+            }
             float score = detectWatermark(imageToCheck, watermark);
             if(score < histogramThreshold){
                 QCheckBox* checkBox;
@@ -171,16 +179,24 @@ void cropMenu::loadImages(QStringList fileList)
             std::cout << "Filepath: " << validImages[i].first.toStdString() << std::endl;
             std::cout << "Image Score: " << score << std::endl;
         }
-        else if(method == matrixNorm){
-             cv::Mat watermark = cv::imread(watermarkPath.toStdString(), cv::IMREAD_COLOR);
-             float score = compareImage(validImages[i].first, watermark);
+        else if(settings.value("compare/algo").toInt() == NORM_INDEX){
+            std::cout << "Performing Normalization Algorithm" << std::endl;
+            cv::Mat watermark = cv::imread(watermarkPath.toStdString(), cv::IMREAD_COLOR);
+            float score = compareImage(validImages[i].first, watermark);
 
-             std::cout << "Image Score: " << score << std::endl;
-             if(score < normThreshold){
-                 QCheckBox* checkBox;
-                 checkBox = ui->imageGridView->itemAt(i)->widget()->findChild<QCheckBox*>();
-                 checkBox->setCheckState(Qt::Checked);
-             }
+            if(score == -1){
+                std::cout << "Error Calculating Norm, try changing the file name" << std::endl;
+                imageComparison->setValue(i+1);
+                ui->cropNumber->setText(QString("Images to Crop:  %1").arg(numChecked));
+                continue;
+            }
+
+            std::cout << "Image Score: " << score << std::endl;
+            if(score < normThreshold){
+                QCheckBox* checkBox;
+                checkBox = ui->imageGridView->itemAt(i)->widget()->findChild<QCheckBox*>();
+                checkBox->setCheckState(Qt::Checked);
+            }
         }
         imageComparison->setValue(i+1);
     }
@@ -295,7 +311,7 @@ void cropMenu::saveImages(QDir directory){
                 std::cout << "Error: File Save failed" << std::endl;
             }
         }
-        imageSaveProgress->setValue(i);
+        imageSaveProgress->setValue(i+1);
     }
 }
 
