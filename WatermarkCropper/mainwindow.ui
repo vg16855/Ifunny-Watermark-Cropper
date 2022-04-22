@@ -78,7 +78,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="Resources.qrc">:/Images/Ifunny Cropper Logo.png</pixmap>
+         <pixmap resource="Resources.qrc">:/Resources/Ifunny Cropper Logo.png</pixmap>
         </property>
         <property name="scaledContents">
          <bool>true</bool>
@@ -98,7 +98,9 @@
         </property>
         <property name="font">
          <font>
+          <family>Lato</family>
           <pointsize>12</pointsize>
+          <bold>true</bold>
          </font>
         </property>
         <property name="text">
@@ -106,7 +108,7 @@
         </property>
         <property name="icon">
          <iconset resource="Resources.qrc">
-          <normaloff>:/Images/icons8-picture-32.png</normaloff>:/Images/icons8-picture-32.png</iconset>
+          <normaloff>:/Resources/icons8-picture-32.png</normaloff>:/Resources/icons8-picture-32.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -126,7 +128,9 @@
         </property>
         <property name="font">
          <font>
+          <family>Lato</family>
           <pointsize>12</pointsize>
+          <bold>true</bold>
          </font>
         </property>
         <property name="text">
@@ -134,7 +138,7 @@
         </property>
         <property name="icon">
          <iconset resource="Resources.qrc">
-          <normaloff>:/Images/icons8-folder-32.png</normaloff>:/Images/icons8-folder-32.png</iconset>
+          <normaloff>:/Resources/icons8-folder-32.png</normaloff>:/Resources/icons8-folder-32.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -185,7 +189,7 @@
   <action name="actionOptions">
    <property name="icon">
     <iconset resource="Resources.qrc">
-     <normaloff>:/Images/icons8-settings-32.png</normaloff>:/Images/icons8-settings-32.png</iconset>
+     <normaloff>:/Resources/icons8-settings-32.png</normaloff>:/Resources/icons8-settings-32.png</iconset>
    </property>
    <property name="text">
     <string>Options</string>
@@ -194,7 +198,7 @@
   <action name="actionQuit">
    <property name="icon">
     <iconset resource="Resources.qrc">
-     <normaloff>:/Images/icons8-close-64.png</normaloff>:/Images/icons8-close-64.png</iconset>
+     <normaloff>:/Resources/icons8-close-32.png</normaloff>:/Resources/icons8-close-32.png</iconset>
    </property>
    <property name="text">
     <string>Quit</string>
@@ -203,7 +207,7 @@
   <action name="actionAbout">
    <property name="icon">
     <iconset resource="Resources.qrc">
-     <normaloff>:/Images/icons8-info-32.png</normaloff>:/Images/icons8-info-32.png</iconset>
+     <normaloff>:/Resources/icons8-info-32.png</normaloff>:/Resources/icons8-info-32.png</iconset>
    </property>
    <property name="text">
     <string>About</string>

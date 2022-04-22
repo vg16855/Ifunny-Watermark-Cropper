@@ -24,7 +24,9 @@
   </property>
   <property name="font">
    <font>
+    <family>Lato</family>
     <pointsize>12</pointsize>
+    <bold>true</bold>
    </font>
   </property>
   <property name="windowTitle">
@@ -37,7 +39,9 @@
       <widget class="QLabel" name="compareLabel">
        <property name="font">
         <font>
+         <family>Lato</family>
          <pointsize>12</pointsize>
+         <bold>true</bold>
         </font>
        </property>
        <property name="text">
@@ -55,7 +59,9 @@
        </property>
        <property name="font">
         <font>
+         <family>Lato</family>
          <pointsize>12</pointsize>
+         <bold>true</bold>
         </font>
        </property>
        <item>
@@ -74,7 +80,9 @@
       <widget class="QLabel" name="histLabel">
        <property name="font">
         <font>
+         <family>Lato</family>
          <pointsize>12</pointsize>
+         <bold>true</bold>
         </font>
        </property>
        <property name="text">
@@ -94,7 +102,9 @@
          </property>
          <property name="font">
           <font>
+           <family>Lato</family>
            <pointsize>12</pointsize>
+           <bold>true</bold>
           </font>
          </property>
          <property name="toolTip">
@@ -118,7 +128,9 @@
         <widget class="QPushButton" name="histDefault">
          <property name="font">
           <font>
+           <family>Lato</family>
            <pointsize>12</pointsize>
+           <bold>true</bold>
           </font>
          </property>
          <property name="toolTip">
@@ -135,7 +147,9 @@
       <widget class="QLabel" name="normLabel">
        <property name="font">
         <font>
+         <family>Lato</family>
          <pointsize>12</pointsize>
+         <bold>true</bold>
         </font>
        </property>
        <property name="text">
@@ -161,7 +175,9 @@
          </property>
          <property name="font">
           <font>
+           <family>Lato</family>
            <pointsize>12</pointsize>
+           <bold>true</bold>
           </font>
          </property>
          <property name="toolTip">

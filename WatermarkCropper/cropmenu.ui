@@ -18,7 +18,9 @@
   </property>
   <property name="font">
    <font>
+    <family>Lato</family>
     <pointsize>12</pointsize>
+    <bold>true</bold>
    </font>
   </property>
   <property name="windowTitle">
@@ -99,7 +101,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="Resources.qrc">:/Images/icons8-picture-32.png</pixmap>
+          <pixmap resource="Resources.qrc">:/Resources/icons8-picture-32.png</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -134,7 +136,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="Resources.qrc">:/Images/icons8-crop-32.png</pixmap>
+          <pixmap resource="Resources.qrc">:/Resources/icons8-crop-32.png</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -234,7 +236,7 @@
         <enum>Qt::RichText</enum>
        </property>
        <property name="pixmap">
-        <pixmap resource="Resources.qrc">:/Images/icons8-picture-64.png</pixmap>
+        <pixmap resource="Resources.qrc">:/Resources/icons8-picture-64.png</pixmap>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -262,7 +264,9 @@
          </property>
          <property name="font">
           <font>
-           <pointsize>9</pointsize>
+           <family>Lato</family>
+           <pointsize>10</pointsize>
+           <bold>false</bold>
           </font>
          </property>
          <property name="text">
@@ -270,7 +274,7 @@
          </property>
          <property name="icon">
           <iconset resource="Resources.qrc">
-           <normaloff>:/Images/icons8-cancel-32.png</normaloff>:/Images/icons8-cancel-32.png</iconset>
+           <normaloff>:/Resources/icons8-cancel-32.png</normaloff>:/Resources/icons8-cancel-32.png</iconset>
          </property>
         </widget>
        </item>
@@ -290,7 +294,9 @@
          </property>
          <property name="font">
           <font>
-           <pointsize>9</pointsize>
+           <family>Lato</family>
+           <pointsize>10</pointsize>
+           <bold>false</bold>
           </font>
          </property>
          <property name="text">
@@ -298,7 +304,7 @@
          </property>
          <property name="icon">
           <iconset resource="Resources.qrc">
-           <normaloff>:/Images/icons8-save-32.png</normaloff>:/Images/icons8-save-32.png</iconset>
+           <normaloff>:/Resources/icons8-save-32.png</normaloff>:/Resources/icons8-save-32.png</iconset>
          </property>
         </widget>
        </item>
@@ -318,7 +324,9 @@
          </property>
          <property name="font">
           <font>
-           <pointsize>9</pointsize>
+           <family>Lato</family>
+           <pointsize>10</pointsize>
+           <bold>false</bold>
           </font>
          </property>
          <property name="text">
@@ -326,7 +334,7 @@
          </property>
          <property name="icon">
           <iconset resource="Resources.qrc">
-           <normaloff>:/Images/icons8-save-as-32.png</normaloff>:/Images/icons8-save-as-32.png</iconset>
+           <normaloff>:/Resources/icons8-save-as-32.png</normaloff>:/Resources/icons8-save-as-32.png</iconset>
          </property>
         </widget>
        </item>
