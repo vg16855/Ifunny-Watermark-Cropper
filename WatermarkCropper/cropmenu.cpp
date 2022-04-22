@@ -31,12 +31,14 @@ const float* ranges[] = { hRanges, sRanges };
 int channels[] = {0,1};
 QString initialFilePath;
 
+
 cropMenu::cropMenu(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::cropMenu)
 {
     ui->setupUi(this);
 }
+
 
 cropMenu::~cropMenu()
 {
@@ -52,12 +54,12 @@ cropMenu::~cropMenu()
     delete ui;
 }
 
+
 void cropMenu::loadImages(QStringList fileList)
 {
     //gets the folder that the images came from
     QFileInfo startingInfo(fileList[0]);
     initialFilePath = startingInfo.path();
-    std::cout << initialFilePath.toStdString() << std::endl;
 
     //Get filepath of watermark(THE APPLICATION FOLDER)
     watermarkPath = QCoreApplication::applicationDirPath();
@@ -68,30 +70,28 @@ void cropMenu::loadImages(QStringList fileList)
     QPointer<QProgressDialog> imageLoadProgress = new QProgressDialog("Loading Images", "Abort", 0, fileList.size(), this);
     imageLoadProgress->setWindowModality(Qt::WindowModal);
     imageLoadProgress->show();
-    imageLoadProgress->deleteLater();
-    connect(imageLoadProgress, SIGNAL(canceled()), this, SLOT(myCustomCancel()));
 
     if(fileList.isEmpty()){
         std::cout << "Empty Array" << std::endl;
         return;
     }
-    std::cout << "Size of fileList: " << fileList.size() << std::endl;
     //Loads images into grid view
     int j = 0;
     int k = 0;
     int validCounter = 0;
 
     for(int i = 0; i < fileList.length(); i++){
-        if(imageLoadProgress->wasCanceled())
-            break;
+        if(imageLoadProgress->wasCanceled()){
+            close();
+            return;
+        }
+
         //Error Checking
-        std::cout << fileList[i].toStdString() << std::endl;
         QImage image;
         if(!image.load(fileList[i])){
             std::cout << "invalid image" << std::endl;
             continue;
         }
-        printf("Image Dimensions: %d %d \n", image.width(), image.height());
         if(image.width() < 140 || image.height() < 20){
             std::cout << "Image too Small" << std::endl;
             continue;
@@ -124,12 +124,10 @@ void cropMenu::loadImages(QStringList fileList)
         connect(checkBox, &QCheckBox::stateChanged, [=](bool checked) {
             if (checked){
                 emit checkBoxChecked(checkBox, validCounter, fileList[i]);
-                std::cout << "Checked" << std::endl;
                 numChecked++;
             }
             else{
                 emit checkBoxChecked(checkBox, validCounter, fileList[i]);
-                std::cout << "Unchecked" << std::endl;
                 numChecked--;
             }
             ui->cropNumber->setText(QString("Images to Crop:  %1").arg(numChecked));
@@ -139,14 +137,15 @@ void cropMenu::loadImages(QStringList fileList)
         validImages.push_back(std::make_pair(fileList[i], false));
         k++;
         validCounter++;
+        QApplication::processEvents();
         imageLoadProgress->setValue(i+1);
-
     }
     //Displays info on screen
     int numItems = ui->imageGridView->count();
     ui->imageNumber->setText(QString("Number of Images:  %1").arg(numItems));
     detectWatermark();
 }
+
 
 void cropMenu::detectWatermark(){
     std::cout << "Making Watermark Histogram" << std::endl;
@@ -156,19 +155,18 @@ void cropMenu::detectWatermark(){
     imageComparison->setWindowModality(Qt::WindowModal);
     imageComparison->show();
 
-    connect(imageComparison, SIGNAL(canceled()), this, SLOT(myCustomCancel()));
-
     //Identifies any watermarks in the imagelist
     QSettings settings;
     float histogramThreshold = settings.value("thresh/hist").toDouble();
     float normThreshold = settings.value("thresh/norm").toDouble();
     cv::Mat matWatermark = cv::imread(watermarkFilePath, cv::IMREAD_COLOR);
     for (int i = 0; i < validImages.size(); i++){
-        if(imageComparison->wasCanceled())
-            break;
+        if(imageComparison->wasCanceled()){
+            close();
+            return;
+        }
         if(settings.value("compare/algo").toInt() == HIST_INDEX){
             //Performing Histogram Algorithm
-            std::cout << "Performing Histogram Algorithm" << std::endl;
             cv::Mat imageToCheck = createHistogram(validImages[i].first);
             if(imageToCheck.empty()){
                 std::cout << "Error Creating Histogram, try changing the file name" << std::endl;
@@ -182,11 +180,8 @@ void cropMenu::detectWatermark(){
                 checkBox = ui->imageGridView->itemAt(i)->widget()->findChild<QCheckBox*>();
                 checkBox->setCheckState(Qt::Checked);
             }
-            std::cout << "Filepath: " << validImages[i].first.toStdString() << std::endl;
-            std::cout << "Image Score: " << score << std::endl;
         }
         else if(settings.value("compare/algo").toInt() == NORM_INDEX){
-            std::cout << "Performing Normalization Algorithm" << std::endl;
             float score = compareImage(validImages[i].first, matWatermark);
 
             if(score == -1){
@@ -195,18 +190,18 @@ void cropMenu::detectWatermark(){
                 ui->cropNumber->setText(QString("Images to Crop:  %1").arg(numChecked));
                 continue;
             }
-
-            std::cout << "Image Score: " << score << std::endl;
             if(score < normThreshold){
                 QCheckBox* checkBox;
                 checkBox = ui->imageGridView->itemAt(i)->widget()->findChild<QCheckBox*>();
                 checkBox->setCheckState(Qt::Checked);
             }
         }
+        QApplication::processEvents();
         imageComparison->setValue(i+1);
     }
     ui->cropNumber->setText(QString("Images to Crop:  %1").arg(numChecked));
 }
+
 
 //Creates Histogram matrix based on given image
 cv::Mat cropMenu::createHistogram(QString fileName){
@@ -230,12 +225,14 @@ cv::Mat cropMenu::createHistogram(QString fileName){
     return histImg;
 }
 
+
 float cropMenu::histDetect(cv::Mat img, cv::Mat watermark){
 
     //compares the watermark with the bottom right corner of the image
     float score = cv::compareHist(img, watermark, cv::HISTCMP_BHATTACHARYYA);
     return score;
 }
+
 
 float cropMenu::compareImage(QString fileName, cv::Mat watermark){
     //error checking
@@ -261,6 +258,7 @@ float cropMenu::compareImage(QString fileName, cv::Mat watermark){
     return -1;
 }
 
+
 void cropMenu::on_goBack_clicked()
 {
     numChecked = 0;
@@ -273,6 +271,7 @@ void cropMenu::checkBoxChecked(QCheckBox *checkBox, int pos, QString filePath){
     validImages[pos].second ^= true;
 }
 
+
 void cropMenu::labelClicked(QString filePath){
     int height = ui->previewLabel->height();
     int width = ui->previewLabel->width();
@@ -281,17 +280,18 @@ void cropMenu::labelClicked(QString filePath){
     QString fileDisplay = "Filename: " + pieces.last();
     ui->filenameLabel->setText(fileDisplay);
     ui->previewLabel->setPixmap(pix.scaled(width,height, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    std::cout << "Label Clicked!!!" << std::endl;
 }
 
 
 void cropMenu::closeEvent(QCloseEvent* event)
 {
+    std::cout << "Window Closed!" << std::endl;
     numChecked = 0;
     close();
     emit firstWindow();
 
 }
+
 
 void cropMenu::saveImages(QDir directory){
     QPointer<QProgressDialog> imageSaveProgress = new QProgressDialog("Saving Images", "Abort", 0, validImages.size(), this);
@@ -300,8 +300,10 @@ void cropMenu::saveImages(QDir directory){
     connect(imageSaveProgress, SIGNAL(canceled()), this, SLOT(myCustomCancel()));
 
     for(int i = 0; i < validImages.size(); i++){
-        if(imageSaveProgress->wasCanceled())
-            break;
+        if(imageSaveProgress->wasCanceled()){
+            close();
+            return;
+        }
         if(validImages[i].second){
             QImage original(validImages[i].first);
             QRect rect(0, 0, original.width(), original.height() - 20);
@@ -314,9 +316,11 @@ void cropMenu::saveImages(QDir directory){
                 std::cout << "Error: File Save failed" << std::endl;
             }
         }
+        QApplication::processEvents();
         imageSaveProgress->setValue(i+1);
     }
 }
+
 
 void cropMenu::noImageMessage(){
     QMessageBox info;
@@ -327,6 +331,7 @@ void cropMenu::noImageMessage(){
     info.setWindowTitle("No Watermarks");
     info.exec();
 }
+
 
 void cropMenu::on_save_clicked()
 {
@@ -358,11 +363,4 @@ void cropMenu::on_saveAs_clicked()
 
     saveImages(directory);
     close();
-}
-
-void cropMenu::myCustomCancel(){
-    std::cout << "Canceled" << std::endl;
-    numChecked = 0;
-    close();
-    emit firstWindow();
 }

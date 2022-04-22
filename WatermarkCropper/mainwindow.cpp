@@ -41,7 +41,6 @@ void MainWindow::on_chooseImages_clicked()
     openCropMenu();
     crop->loadImages(fileList);
     crop->show();
-
 }
 
 
@@ -75,6 +74,8 @@ void MainWindow::on_chooseFolder_clicked()
     }
     crop->loadImages(images);
     crop->show();
+
+
 }
 
 

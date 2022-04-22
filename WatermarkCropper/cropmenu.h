@@ -47,8 +47,6 @@ private slots:
 
     void on_saveAs_clicked();
 
-    void myCustomCancel();
-
 private:
     Ui::cropMenu *ui;
 
