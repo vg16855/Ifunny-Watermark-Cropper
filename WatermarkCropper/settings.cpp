@@ -12,11 +12,26 @@ settings::settings(QWidget *parent) :
     ui->setupUi(this);
     //Initialize the saved values for the settings
     QSettings settings;
+    std::cout << "Settings Filepath: " << settings.fileName().toStdString() << std::endl;
 
-    ui->comparisonComboBox->setCurrentIndex(settings.value("compare/algo").toInt());
-    ui->histSpinBox->setValue(settings.value("thresh/hist").toDouble());
-    ui->normSpinBox->setValue(settings.value("thresh/norm").toDouble());
-
+    if(settings.contains("thresh/hist")){
+        ui->histSpinBox->setValue(settings.value("thresh/hist").toDouble());
+    }
+    else{
+        ui->histSpinBox->setValue(DEFAULT_HIST_THRESH);
+    }
+    if(settings.contains("thresh/norm")){
+        ui->normSpinBox->setValue(settings.value("thresh/norm").toDouble());
+    }
+    else{
+        ui->normSpinBox->setValue(DEFAULT_NORM_THRESH);
+    }
+    if(settings.contains("compare/algo")){
+        ui->comparisonComboBox->setCurrentIndex(settings.value("compare/algo").toInt());
+    }
+    else{
+        ui->comparisonComboBox->setCurrentIndex(0);
+    }
 }
 
 
