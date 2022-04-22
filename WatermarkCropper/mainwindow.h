@@ -27,6 +27,8 @@ private slots:
 
     void on_actionQuit_triggered();
 
+    void on_actionAbout_triggered();
+
 private:
     void openCropMenu();
     Ui::MainWindow *ui;

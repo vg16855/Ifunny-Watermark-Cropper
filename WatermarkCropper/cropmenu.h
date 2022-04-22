@@ -23,6 +23,7 @@ public:
     float detectWatermark(cv::Mat, cv::Mat);
     float compareImage(QString, cv::Mat);
     cv::Mat createHistogram(QString);
+    void noImageMessage();
 
 
 signals:

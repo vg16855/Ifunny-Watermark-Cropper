@@ -1,8 +1,50 @@
 <RCC>
     <qresource prefix="/MyImages">
-        <file>Images/icons8-about-32.png</file>
-        <file>Images/icons8-close-32.png</file>
+        <file>Images/icons8-cancel-32.png</file>
+        <file>Images/icons8-cancel-64.png</file>
+        <file>Images/icons8-close-64.png</file>
+        <file>Images/icons8-folder-32.png</file>
+        <file>Images/icons8-folder-64.png</file>
+        <file>Images/icons8-info-32.png</file>
+        <file>Images/icons8-info-64.png</file>
+        <file>Images/icons8-picture-32.png</file>
+        <file>Images/icons8-picture-64.png</file>
+        <file>Images/icons8-settings-64.png</file>
         <file>Images/icons8-settings-32.png</file>
         <file>Images/Cropped Ifunny Watermark 140 x 20.png</file>
+        <file>Images/icons8-about-32.png</file>
+        <file>Images/icons8-close-32.png</file>
+        <file>Images/icons8-crop-32.png</file>
+        <file>Images/icons8-crop-64.png</file>
+        <file>Images/icons8-file-32.png</file>
+        <file>Images/icons8-file-64.png</file>
+        <file>Images/icons8-save-32.png</file>
+        <file>Images/icons8-save-64.png</file>
+        <file>Images/icons8-save-as-32.png</file>
+        <file>Images/icons8-save-as-64.png</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>Images/Cropped Ifunny Watermark 140 x 20.png</file>
+        <file>Images/icons8-about-32.png</file>
+        <file>Images/icons8-cancel-32.png</file>
+        <file>Images/icons8-cancel-64.png</file>
+        <file>Images/icons8-close-32.png</file>
+        <file>Images/icons8-close-64.png</file>
+        <file>Images/icons8-folder-32.png</file>
+        <file>Images/icons8-folder-64.png</file>
+        <file>Images/icons8-info-32.png</file>
+        <file>Images/icons8-info-64.png</file>
+        <file>Images/icons8-picture-32.png</file>
+        <file>Images/icons8-picture-64.png</file>
+        <file>Images/icons8-settings-32.png</file>
+        <file>Images/icons8-settings-64.png</file>
+        <file>Images/icons8-crop-32.png</file>
+        <file>Images/icons8-crop-64.png</file>
+        <file>Images/icons8-file-32.png</file>
+        <file>Images/icons8-file-64.png</file>
+        <file>Images/icons8-save-32.png</file>
+        <file>Images/icons8-save-64.png</file>
+        <file>Images/icons8-save-as-32.png</file>
+        <file>Images/icons8-save-as-64.png</file>
     </qresource>
 </RCC>

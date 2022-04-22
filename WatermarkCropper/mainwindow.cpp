@@ -4,7 +4,7 @@
 #include "cropmenu.h"
 #include "settings.h"
 #include <QStandardPaths>
-
+#include <QMessageBox>
 #include <QFileDialog>
 
 const QString defaultPath = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
@@ -87,5 +87,16 @@ void MainWindow::on_actionOptions_triggered()
 void MainWindow::on_actionQuit_triggered()
 {
     QApplication::quit();
+}
+
+
+void MainWindow::on_actionAbout_triggered()
+{
+    QMessageBox info;
+    info.setText("This app was made by two brothers who were sick of "
+                 "ifunny putting stupid watermarks on everything");
+    info.setIcon(QMessageBox::Information);
+    info.setWindowTitle("About");
+    info.exec();
 }
 

@@ -11,6 +11,7 @@
 #include <QString>
 #include <QStandardPaths>
 #include <QImageReader>
+#include <QMessageBox>
 #include <opencv2/core.hpp>
 #include "opencv2/highgui.hpp"
 #include "opencv2/imgcodecs.hpp"
@@ -293,12 +294,11 @@ void cropMenu::saveImages(QDir directory){
     imageSaveProgress = new QProgressDialog("Saving Images", "Abort", 0, validImages.size(), this);
     imageSaveProgress->setWindowModality(Qt::WindowModal);
     imageSaveProgress->show();
-    connect(imageLoadProgress, SIGNAL(cancelled()), this, SLOT(myCustomCancel()));
+    connect(imageLoadProgress, SIGNAL(canceled()), this, SLOT(myCustomCancel()));
 
     for(int i = 0; i < validImages.size(); i++){
         if(imageSaveProgress->wasCanceled())
             break;
-        std::cout << validImages[i].second << std::endl;
         if(validImages[i].second){
             QImage original(validImages[i].first);
             QRect rect(0, 0, original.width(), original.height() - 20);
@@ -315,8 +315,22 @@ void cropMenu::saveImages(QDir directory){
     }
 }
 
+void cropMenu::noImageMessage(){
+    QMessageBox info;
+    info.setText("No watermarks are being detected, "
+                 "check some images or try a "
+                 "different set of images");
+    info.setIcon(QMessageBox::Information);
+    info.setWindowTitle("No Watermarks");
+    info.exec();
+}
+
 void cropMenu::on_save_clicked()
 {
+    if(numChecked == 0){
+        noImageMessage();
+        return;
+    }
     QDir directory(initialFilePath);
     saveImages(directory);
     close();
@@ -325,18 +339,26 @@ void cropMenu::on_save_clicked()
 
 void cropMenu::on_saveAs_clicked()
 {
+    if(numChecked == 0){
+        noImageMessage();
+        return;
+    }
     QString savePath = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
     QDir directory = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
                                                  savePath,
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
 
+    if(directory.exists()){
+        return;
+    }
+
     saveImages(directory);
     close();
 }
 
 void cropMenu::myCustomCancel(){
-    std::cout << "Cancelled" << std::endl;
+    std::cout << "Canceled" << std::endl;
     numChecked = 0;
     close();
     emit firstWindow();

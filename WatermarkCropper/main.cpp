@@ -2,10 +2,19 @@
 
 #include <QApplication>
 #include <QCoreApplication>
+#include <QFile>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    //set app style sheet
+    QString stylePath = QCoreApplication::applicationDirPath();
+    stylePath.append("/Diffnes.qss");
+    QFile styleSheetFile(stylePath);
+    styleSheetFile.open(QFile::ReadOnly);
+    QString styleSheet { QLatin1String(styleSheetFile.readAll()) };
+    a.setStyleSheet(styleSheet);
 
     QCoreApplication::setOrganizationName("TeamFortress");
     QCoreApplication::setApplicationName("iFunnyWatermarkCropper");
