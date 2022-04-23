@@ -33,18 +33,16 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 
 
-win32:CONFIG(release, debug|release){ LIBS += -L$$PWD/../../../../../../../opencv/build/x64/vc15/lib/ -lopencv_world455
-                                      LIBS += -L$$PWD/../../../../../../../opencv/build/x64/vc15/bin/ -lopencv_world455
-}
-else:win32:CONFIG(debug, debug|release){ LIBS += -L$$PWD/../../../../../../../opencv/build/x64/vc15/lib/ -lopencv_world455d
-                                         LIBS += -L$$PWD/../../../../../../../opencv/build/x64/vc15/bin/ -lopencv_world455d
-}
-else:unix{ LIBS += -L$$PWD/../../../../../../../opencv/build/x64/vc15/lib/ -lopencv_world455
-           LIBS += -L$$PWD/../../../../../../../opencv/build/x64/vc15/bin/ -lopencv_world455
-           }
-
-INCLUDEPATH += $$PWD/../../../../../../../opencv/build/include
-DEPENDPATH += $$PWD/../../../../../../../opencv/build/include
 
 RESOURCES += \
     Resources.qrc
+
+win32:CONFIG(release, debug|release):{LIBS += -L$$PWD/../../../../../../../opencv/build/x64/vc15/lib/ -lopencv_world455
+                                      LIBS += -L$$PWD/../../../../../../../opencv/build/x64/vc15/bin/ -lopencv_world455
+}
+else:win32:CONFIG(debug, debug|release):{ LIBS += -L$$PWD/../../../../../../../opencv/build/x64/vc15/lib/ -lopencv_world455d
+                                          LIBS += -L$$PWD/../../../../../../../opencv/build/x64/vc15/bin/ -lopencv_world455d
+}
+
+INCLUDEPATH += $$PWD/../../../../../../../opencv/build/x64/vc15
+DEPENDPATH += $$PWD/../../../../../../../opencv/build/x64/vc15
