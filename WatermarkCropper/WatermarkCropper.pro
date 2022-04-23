@@ -31,12 +31,6 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-
-
-
-RESOURCES += \
-    Resources.qrc
-
 win32:CONFIG(release, debug|release):{LIBS += -L$$PWD/../../../../../../../opencv/build/x64/vc15/lib/ -lopencv_world455
                                       LIBS += -L$$PWD/../../../../../../../opencv/build/x64/vc15/bin/ -lopencv_world455
 }
@@ -46,3 +40,13 @@ else:win32:CONFIG(debug, debug|release):{ LIBS += -L$$PWD/../../../../../../../o
 
 INCLUDEPATH += $$PWD/../../../../../../../opencv/build/x64/vc15
 DEPENDPATH += $$PWD/../../../../../../../opencv/build/x64/vc15
+
+
+INCLUDEPATH += $$PWD/../../../../../../../opencv/build/include
+DEPENDPATH += $$PWD/../../../../../../../opencv/build/include
+
+
+RESOURCES += \
+    Resources.qrc
+
+RC_ICONS += Ifunny-Cropper-Logo.ico
