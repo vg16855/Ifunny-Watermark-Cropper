@@ -10,6 +10,18 @@ settings::settings(QWidget *parent) :
     ui(new Ui::settings)
 {
     ui->setupUi(this);
+
+    QFont text = QFont("Lato", 12, QFont::Bold);
+    ui->compareLabel->setFont(text);
+    ui->comparisonComboBox->setFont(text);
+    ui->histLabel->setFont(text);
+    ui->normLabel->setFont(text);
+    ui->histSpinBox->setFont(text);
+    ui->normSpinBox->setFont(text);
+    ui->histDefault->setFont(text);
+    ui->normDefault->setFont(text);
+    ui->dialogButton->setFont(text);
+
     //Initialize the saved values for the settings
     QSettings settings;
     std::cout << "Settings Filepath: " << settings.fileName().toStdString() << std::endl;

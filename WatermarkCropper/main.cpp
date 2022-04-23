@@ -8,14 +8,13 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    Q_INIT_RESOURCE(Resources);
+
+    QFontDatabase::addApplicationFont(":/Resources/Lato-Regular.ttf");
+    QFontDatabase::addApplicationFont(":/Resources/BebasNeue-Regular.ttf");
 
     //set app style sheet
-    QFontDatabase::addApplicationFont(":/Resources/Lato-Regular.ttf");
-    QFontDatabase::addApplicationFont(":/Resources/BebasNeueu-Regular.ttf");
-
-    QString stylePath = QCoreApplication::applicationDirPath();
-    stylePath.append("/Diffnes.qss");
-    QFile styleSheetFile(stylePath);
+    QFile styleSheetFile(":/Resources/Diffnes.qss");
     styleSheetFile.open(QFile::ReadOnly);
     QString styleSheet { QLatin1String(styleSheetFile.readAll()) };
     a.setStyleSheet(styleSheet);

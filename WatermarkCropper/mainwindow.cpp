@@ -6,6 +6,7 @@
 #include <QStandardPaths>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QFontDatabase>
 
 const QString defaultPath = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
 
@@ -15,6 +16,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->setWindowTitle("Ifunny Watermark Cropper");
+    QFont title = QFont("Bebas Neue", 40);
+    QFont text = QFont("Lato", 12, QFont::Bold);
+    ui->title->setFont(title);
+    ui->chooseFolder->setFont(text);
+    ui->chooseImages->setFont(text);
 }
 
 MainWindow::~MainWindow()

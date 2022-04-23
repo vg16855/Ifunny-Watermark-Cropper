@@ -163,9 +163,6 @@
          <property name="textFormat">
           <enum>Qt::RichText</enum>
          </property>
-         <property name="pixmap">
-          <pixmap>:/MyImages/Images/icons8-crop-32.png</pixmap>
-         </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
          </property>
@@ -220,7 +217,9 @@
        </property>
        <property name="font">
         <font>
+         <family>Lato</family>
          <pointsize>11</pointsize>
+         <bold>true</bold>
         </font>
        </property>
        <property name="styleSheet">

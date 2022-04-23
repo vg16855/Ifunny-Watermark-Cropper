@@ -37,6 +37,17 @@ cropMenu::cropMenu(QWidget *parent) :
     ui(new Ui::cropMenu)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Cropping Menu");
+    QFont text = QFont("Lato", 12, QFont::Bold);
+    QFont smallText = QFont("Lato", 10);
+
+    ui->cropNumber->setFont(text);
+    ui->imageNumber->setFont(text);
+    ui->filenameLabel->setFont(text);
+    ui->save->setFont(smallText);
+    ui->goBack->setFont(smallText);
+    ui->saveAs->setFont(smallText);
+
 }
 
 
