@@ -99,17 +99,21 @@ void cropMenu::loadImages(QStringList fileList)
 
         //Error Checking
         QImage image;
+        QImageReader gifCheck(fileList[i]);
         if(!image.load(fileList[i])){
             std::cout << "invalid image" << std::endl;
+            imageLoadProgress->setValue(i+1);
             continue;
         }
         if(image.width() < 140 || image.height() < 20){
             std::cout << "Image too Small" << std::endl;
+            imageLoadProgress->setValue(i+1);
             continue;
         }
-        QImageReader reader(fileList[i]);
-        if(reader.supportsAnimation()){
+
+        if(gifCheck.supportsAnimation() && gifCheck.imageCount() > 1){
             std::cout << "Animated images not allowed" << std::endl;
+            imageLoadProgress->setValue(i+1);
             continue;
         }
         //for placing images in a grid
