@@ -65,7 +65,7 @@ cropMenu::~cropMenu()
     delete ui;
 }
 
-
+//Loads images and displays them on a QGridLayout
 void cropMenu::loadImages(QStringList fileList)
 {
     //gets the folder that the images came from
@@ -126,6 +126,7 @@ void cropMenu::loadImages(QStringList fileList)
         QPixmap bitmap;
         bitmap.convertFromImage(image, Qt::AutoColor);
         QPointer<Clickable> label = new Clickable(this);
+        label->setToolTip(fileList[i]);
         label->setFixedSize(100, 100);
         label->setPixmap(bitmap.scaled(100,100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         label->setAlignment(Qt::AlignCenter);
@@ -163,6 +164,7 @@ void cropMenu::loadImages(QStringList fileList)
 
 
 void cropMenu::detectWatermark(){
+    //initializes some stuff to setup
     std::cout << "Making Watermark Histogram" << std::endl;
     std::cout << watermarkPath.toStdString() << std::endl;
     cv::Mat watermark = createHistogram(watermarkPath);
@@ -175,6 +177,8 @@ void cropMenu::detectWatermark(){
     float histogramThreshold = settings.value("thresh/hist").toDouble();
     float normThreshold = settings.value("thresh/norm").toDouble();
     cv::Mat matWatermark = cv::imread(watermarkFilePath, cv::IMREAD_COLOR);
+
+    //Iterates through all valid images
     for (int i = 0; i < validImages.size(); i++){
         if(imageComparison->wasCanceled()){
             close();
@@ -189,6 +193,8 @@ void cropMenu::detectWatermark(){
                 ui->cropNumber->setText(QString("Images to Crop:  %1").arg(numChecked));
                 continue;
             }
+
+            //Calculates score based on similarity(lower = better)
             float score = histDetect(imageToCheck, watermark);
             if(score < histogramThreshold){
                 QCheckBox* checkBox;
@@ -197,8 +203,10 @@ void cropMenu::detectWatermark(){
             }
         }
         else if(settings.value("compare/algo").toInt() == NORM_INDEX){
-            float score = compareImage(validImages[i].first, matWatermark);
+            //Performing Normalization Algorithm
 
+            //Calculates score based on similarity(lower = better)
+            float score = compareImage(validImages[i].first, matWatermark);
             if(score == -1){
                 std::cout << "Error Calculating Norm, try changing the file name" << std::endl;
                 imageComparison->setValue(i+1);
@@ -288,6 +296,7 @@ void cropMenu::checkBoxChecked(QCheckBox *checkBox, int pos, QString filePath){
 
 
 void cropMenu::labelClicked(QString filePath){
+    //Displays a preview of the clicked image on the window
     int height = ui->previewLabel->height();
     int width = ui->previewLabel->width();
     QPixmap pix(filePath);
@@ -309,17 +318,20 @@ void cropMenu::closeEvent(QCloseEvent* event)
 
 
 void cropMenu::saveImages(QDir directory){
+    //Create progress bar
     QPointer<QProgressDialog> imageSaveProgress = new QProgressDialog("Saving Images", "Abort", 0, validImages.size(), this);
     imageSaveProgress->setWindowModality(Qt::WindowModal);
     imageSaveProgress->show();
     connect(imageSaveProgress, SIGNAL(canceled()), this, SLOT(myCustomCancel()));
 
+    //Iterates through all the checked images
     for(int i = 0; i < validImages.size(); i++){
         if(imageSaveProgress->wasCanceled()){
             close();
             return;
         }
         if(validImages[i].second){
+            //Saves the cropped versuib
             QImage original(validImages[i].first);
             QRect rect(0, 0, original.width(), original.height() - 20);
             QImage cropped = original.copy(rect);
