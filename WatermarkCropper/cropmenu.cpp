@@ -101,7 +101,7 @@ void cropMenu::loadImages(QStringList fileList)
         QImage image;
         QImageReader imageCheck(fileList[i]);
         if(!image.load(fileList[i])){
-            std::cout << "invalid image" << std::endl;
+            std::cout << "invalid image: "<< fileList[i].toStdString() << std::endl;
             imageLoadProgress->setValue(i+1);
             continue;
         }

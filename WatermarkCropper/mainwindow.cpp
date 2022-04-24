@@ -73,9 +73,9 @@ void MainWindow::on_chooseFolder_clicked()
             std::cout << "Empty Folder Given" << std::endl;
             return;
         }
-    for (int i = 1; i < list.size(); i++)
+    for (int i = 0; i < list.size(); i++)
     {
-        qDebug() << "Filename " << i << " = " << directory.filePath(list.at(i));
+        //qDebug() << "Filename " << i+1 << " = " << directory.filePath(list.at(i));
         images[i] = directory.filePath(list.at(i));
     }
     crop->loadImages(images);
