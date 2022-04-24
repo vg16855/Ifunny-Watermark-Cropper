@@ -105,7 +105,7 @@ void cropMenu::loadImages(QStringList fileList)
             imageLoadProgress->setValue(i+1);
             continue;
         }
-        if(image.width() < 140 || image.height() < 20){
+        if(image.width() <= 140 || image.height() <= 20){
             std::cout << "Image too Small" << std::endl;
             imageLoadProgress->setValue(i+1);
             continue;
@@ -140,10 +140,12 @@ void cropMenu::loadImages(QStringList fileList)
         connect(checkBox, &QCheckBox::stateChanged, [=](bool checked) {
             if (checked){
                 emit checkBoxChecked(checkBox, validCounter, fileList[i]);
+                checkBox->parentWidget()->setStyleSheet("QLabel { border: 2px solid red; }");
                 numChecked++;
             }
             else{
                 emit checkBoxChecked(checkBox, validCounter, fileList[i]);
+                checkBox->parentWidget()->setStyleSheet("border: 0px");
                 numChecked--;
             }
             ui->cropNumber->setText(QString("Images to Crop:  %1").arg(numChecked));
@@ -179,7 +181,7 @@ void cropMenu::detectWatermark(){
         histogramThreshold = settings.value("thresh/hist").toDouble();
     }
     else{
-        histogramThreshold = 0.7;
+        histogramThreshold = 0.75;
     }
     if(settings.contains("thresh/norm")){
         normThreshold = settings.value("thresh/norm").toDouble();

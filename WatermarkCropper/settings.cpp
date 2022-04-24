@@ -2,7 +2,7 @@
 #include "settings.h"
 #include "ui_settings.h"
 
-const double DEFAULT_HIST_THRESH = .7;
+const double DEFAULT_HIST_THRESH = .75;
 const double DEFAULT_NORM_THRESH = 1;
 
 settings::settings(QWidget *parent) :
