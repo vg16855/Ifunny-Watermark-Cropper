@@ -302,7 +302,7 @@ void cropMenu::on_goBack_clicked()
 }
 
 
-void cropMenu::checkBoxChecked(QCheckBox *checkBox, int pos, QString filePath){
+void cropMenu::checkBoxChecked(QCheckBox*, int pos, QString filePath){
     std::get<CHECKED>(validImages[pos]) ^= true;
 }
 
@@ -319,7 +319,7 @@ void cropMenu::labelClicked(QString filePath){
 }
 
 
-void cropMenu::closeEvent(QCloseEvent* event)
+void cropMenu::closeEvent(QCloseEvent*)
 {
     std::cout << "Window Closed!" << std::endl;
     numChecked = 0;

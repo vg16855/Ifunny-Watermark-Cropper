@@ -24,8 +24,8 @@
         <file>Resources/icons8-save-as-64.png</file>
         <file>Resources/icons8-settings-32.png</file>
         <file>Resources/icons8-settings-64.png</file>
-        <file>Resources/Ifunny Cropper Logo.png</file>
         <file>Resources/Lato-Regular.ttf</file>
         <file>Resources/check.png</file>
+        <file>Resources/Ifunny Cropper Logo.png</file>
     </qresource>
 </RCC>
