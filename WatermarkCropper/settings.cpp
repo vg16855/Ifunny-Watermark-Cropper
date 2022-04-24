@@ -54,14 +54,14 @@ settings::~settings()
 
 
 //When the "Comparison Method" combo box gets changed
-void settings::on_comparisonComboBox_currentIndexChanged(int index)
+void settings::on_comparisonComboBox_currentIndexChanged()
 {
     std::cout << "Combobox Changed" << std::endl;
     std::cout << "Combobox Value: " << ui->comparisonComboBox->currentIndex() << std::endl;
 }
 
 //When the "Hist Threshold" spin box gets changed
-void settings::on_histSpinBox_valueChanged(double arg1)
+void settings::on_histSpinBox_valueChanged()
 {
     std::cout << "Histogram Spinbox Changed" << std::endl;
     std::cout << "Histogram Spinbox Value: " << ui->histSpinBox->value() << std::endl;
@@ -76,7 +76,7 @@ void settings::on_histDefault_clicked()
 }
 
 //When the "Norm Threshold" spin box gets changed
-void settings::on_normSpinBox_valueChanged(double arg1)
+void settings::on_normSpinBox_valueChanged()
 {
     std::cout << "Normalization Spinbox Changed" << std::endl;
     std::cout << "Normalization Spinbox Value: " << ui->normSpinBox->value() << std::endl;

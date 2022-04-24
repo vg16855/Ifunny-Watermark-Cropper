@@ -19,13 +19,13 @@ public:
 private slots:
 
 
-    void on_comparisonComboBox_currentIndexChanged(int index);
+    void on_comparisonComboBox_currentIndexChanged();
 
-    void on_histSpinBox_valueChanged(double arg1);
+    void on_histSpinBox_valueChanged();
 
     void on_histDefault_clicked();
 
-    void on_normSpinBox_valueChanged(double arg1);
+    void on_normSpinBox_valueChanged();
 
     void on_normDefault_clicked();
 
