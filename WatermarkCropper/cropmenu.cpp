@@ -335,7 +335,7 @@ void cropMenu::saveImages(QDir directory){
     imageSaveProgress->setWindowModality(Qt::WindowModal);
     imageSaveProgress->show();
     connect(imageSaveProgress, SIGNAL(canceled()), this, SLOT(myCustomCancel()));
-
+    int failed = 0;
     //Iterates through all the checked images
     for(int i = 0; i < validImages.size(); i++){
         if(imageSaveProgress->wasCanceled()){
@@ -353,11 +353,19 @@ void cropMenu::saveImages(QDir directory){
             bool successful = cropped.save(fileName, nullptr, 100);
             if(!successful){
                 std::cout << "Error: File Save failed" << std::endl;
+                failed++;
             }
         }
         QApplication::processEvents();
         imageSaveProgress->setValue(i+1);
     }
+    QString str("Save Complete! %1 images failed to save.");
+    str = str.arg(failed);
+    QMessageBox info;
+    info.setText(str);
+    info.setIcon(QMessageBox::Information);
+    info.setWindowTitle("Save Successful");
+    info.exec();
 }
 
 
