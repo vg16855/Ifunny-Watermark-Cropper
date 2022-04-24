@@ -696,7 +696,7 @@ QCheckBox::indicator
 
 QCheckBox::indicator:checked
 {
-    image:url("./ressources/check.png");
+    image:url(":/Resources/check.png");
 	background-color: #002b2b;
     border: 1px solid #3a546e;
 
@@ -987,7 +987,7 @@ QStatusBar
 /*-----QSizeGrip-----*/
 QSizeGrip 
 {
-	background-color: image("./ressources/sizegrip.png"); /*To replace*/
+        background-color: image("./Resources/sizegrip.png"); /*To replace*/
 	border: none;
 
 }

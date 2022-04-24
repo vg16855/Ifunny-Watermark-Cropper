@@ -47,7 +47,6 @@ cropMenu::cropMenu(QWidget *parent) :
     ui->save->setFont(smallText);
     ui->goBack->setFont(smallText);
     ui->saveAs->setFont(smallText);
-
 }
 
 
@@ -55,9 +54,7 @@ cropMenu::~cropMenu()
 {
     std::cout << "Deleting Images" << std::endl;
     int numItems = validImages.size();
-    std::cout << numItems << " Items to delete" << std::endl;
     for(int i = 0; i < numItems; i++){
-        std::cout << "Deleting image " << i << std::endl;
         QLayoutItem* item = ui->imageGridView->takeAt(0);
         delete item->widget();
         delete item;
@@ -99,7 +96,7 @@ void cropMenu::loadImages(QStringList fileList)
 
         //Error Checking
         QImage image;
-        QImageReader gifCheck(fileList[i]);
+        QImageReader imageCheck(fileList[i]);
         if(!image.load(fileList[i])){
             std::cout << "invalid image" << std::endl;
             imageLoadProgress->setValue(i+1);
@@ -111,7 +108,7 @@ void cropMenu::loadImages(QStringList fileList)
             continue;
         }
 
-        if(gifCheck.supportsAnimation() && gifCheck.imageCount() > 1){
+        if(imageCheck.supportsAnimation() && imageCheck.imageCount() > 1){
             std::cout << "Animated images not allowed" << std::endl;
             imageLoadProgress->setValue(i+1);
             continue;
@@ -165,8 +162,6 @@ void cropMenu::loadImages(QStringList fileList)
 
 void cropMenu::detectWatermark(){
     //initializes some stuff to setup
-    std::cout << "Making Watermark Histogram" << std::endl;
-    std::cout << watermarkPath.toStdString() << std::endl;
     cv::Mat watermark = createHistogram(watermarkPath);
     QPointer<QProgressDialog> imageComparison = new QProgressDialog("Identifying Watermarks", "Abort", 0, validImages.size(), this);
     imageComparison->setWindowModality(Qt::WindowModal);
@@ -174,8 +169,22 @@ void cropMenu::detectWatermark(){
 
     //Identifies any watermarks in the imagelist
     QSettings settings;
-    float histogramThreshold = settings.value("thresh/hist").toDouble();
-    float normThreshold = settings.value("thresh/norm").toDouble();
+    float histogramThreshold;
+    float normThreshold;
+
+    if(settings.contains("thresh/hist")){
+        histogramThreshold = settings.value("thresh/hist").toDouble();
+    }
+    else{
+        histogramThreshold = 0.7;
+    }
+    if(settings.contains("thresh/norm")){
+        normThreshold = settings.value("thresh/norm").toDouble();
+    }
+    else{
+        normThreshold = 1.0;
+    }
+
     cv::Mat matWatermark = cv::imread(watermarkFilePath, cv::IMREAD_COLOR);
 
     //Iterates through all valid images
