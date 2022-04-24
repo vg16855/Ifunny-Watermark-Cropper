@@ -50,7 +50,7 @@ private slots:
 private:
     Ui::cropMenu *ui;
 
-    std::vector<std::pair<QString, bool>> validImages;
+    std::vector<std::tuple<QString, bool, QImage>> validImages;
     QString watermarkPath;
     std::string watermarkFilePath;
 

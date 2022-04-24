@@ -19,6 +19,9 @@
 
 const int HIST_INDEX = 0;
 const int NORM_INDEX = 1;
+const int FILE_PATH = 0;
+const int CHECKED = 1;
+const int IMAGE = 2;
 
 int hBins = 180;
 int sBins = 256;
@@ -147,7 +150,7 @@ void cropMenu::loadImages(QStringList fileList)
         });
 
         //Updating some variables for next iteration
-        validImages.push_back(std::make_pair(fileList[i], false));
+        validImages.push_back(std::make_tuple(fileList[i], false, image));
         k++;
         validCounter++;
         QApplication::processEvents();
@@ -195,7 +198,7 @@ void cropMenu::detectWatermark(){
         }
         if(settings.value("compare/algo").toInt() == HIST_INDEX){
             //Performing Histogram Algorithm
-            cv::Mat imageToCheck = createHistogram(validImages[i].first);
+            cv::Mat imageToCheck = createHistogram(std::get<FILE_PATH>(validImages[i]));
             if(imageToCheck.empty()){
                 std::cout << "Error Creating Histogram, try changing the file name" << std::endl;
                 imageComparison->setValue(i+1);
@@ -215,7 +218,7 @@ void cropMenu::detectWatermark(){
             //Performing Normalization Algorithm
 
             //Calculates score based on similarity(lower = better)
-            float score = compareImage(validImages[i].first, matWatermark);
+            float score = compareImage(std::get<FILE_PATH>(validImages[i]), matWatermark);
             if(score == -1){
                 std::cout << "Error Calculating Norm, try changing the file name" << std::endl;
                 imageComparison->setValue(i+1);
@@ -300,7 +303,7 @@ void cropMenu::on_goBack_clicked()
 
 
 void cropMenu::checkBoxChecked(QCheckBox *checkBox, int pos, QString filePath){
-    validImages[pos].second ^= true;
+    std::get<CHECKED>(validImages[pos]) ^= true;
 }
 
 
@@ -339,12 +342,12 @@ void cropMenu::saveImages(QDir directory){
             close();
             return;
         }
-        if(validImages[i].second){
+        if(std::get<CHECKED>(validImages[i])){
             //Saves the cropped versuib
-            QImage original(validImages[i].first);
+            QImage original = std::get<IMAGE>(validImages[i]);
             QRect rect(0, 0, original.width(), original.height() - 20);
             QImage cropped = original.copy(rect);
-            QFile f(validImages[i].first);
+            QFile f(std::get<FILE_PATH>(validImages[i]));
             QFileInfo fileInfo(f);
             QString fileName(directory.absoluteFilePath(fileInfo.fileName()));
             bool successful = cropped.save(fileName, nullptr, 100);
