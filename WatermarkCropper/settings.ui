@@ -64,6 +64,9 @@
          <bold>true</bold>
         </font>
        </property>
+       <property name="toolTip">
+        <string>Default = 0.75</string>
+       </property>
        <item>
         <property name="text">
          <string>Histogram</string>
@@ -120,7 +123,7 @@
           <double>0.100000000000000</double>
          </property>
          <property name="value">
-          <double>0.700000000000000</double>
+          <double>0.750000000000000</double>
          </property>
         </widget>
        </item>
@@ -134,7 +137,7 @@
           </font>
          </property>
          <property name="toolTip">
-          <string>Default = 0.7</string>
+          <string>Default = 0.75</string>
          </property>
          <property name="text">
           <string>Default</string>
@@ -142,20 +145,6 @@
         </widget>
        </item>
       </layout>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="normLabel">
-       <property name="font">
-        <font>
-         <family>Lato</family>
-         <pointsize>12</pointsize>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Norm Threshold &lt;</string>
-       </property>
-      </widget>
      </item>
      <item row="2" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -205,6 +194,20 @@
         </widget>
        </item>
       </layout>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="normLabel">
+       <property name="font">
+        <font>
+         <family>Lato</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Norm Threshold &lt;</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
