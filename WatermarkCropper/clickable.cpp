@@ -1,6 +1,3 @@
 #include "clickable.h"
 
-void Clickable::mousePressEvent(QMouseEvent*)
-{
-    emit clicked();
-}
+void Clickable::mousePressEvent(QMouseEvent*) { emit clicked(); }

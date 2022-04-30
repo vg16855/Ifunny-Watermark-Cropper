@@ -1,22 +1,21 @@
-#include "mainwindow.h"
-
 #include <QApplication>
 #include <QCoreApplication>
 #include <QFile>
 #include <QFontDatabase>
 
-int main(int argc, char *argv[])
-{
+#include "mainwindow.h"
+
+int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
     Q_INIT_RESOURCE(Resources);
 
     QFontDatabase::addApplicationFont(":/Resources/Lato-Regular.ttf");
     QFontDatabase::addApplicationFont(":/Resources/BebasNeue-Regular.ttf");
 
-    //set app style sheet
+    // set app style sheet
     QFile styleSheetFile(":/Resources/Diffnes.qss");
     styleSheetFile.open(QFile::ReadOnly);
-    QString styleSheet { QLatin1String(styleSheetFile.readAll()) };
+    QString styleSheet{QLatin1String(styleSheetFile.readAll())};
     a.setStyleSheet(styleSheet);
 
     QCoreApplication::setOrganizationName("TeamFortress");
